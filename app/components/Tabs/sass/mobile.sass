@@ -1,0 +1,32 @@
+&
+  &__Header
+    position: relative
+    z-index: 1
+    background: $colorWhite
+    border-radius: 25px
+    display: inline-block
+
+    &__Title
+      display: inline-block
+      color: $colorLightGray
+      padding: $spacingMedium $spacingHuge
+      cursor: pointer
+
+      &:active
+        box-shadow: $shadowDarker
+
+      &:first-child
+        &--active
+        border-radius: 18px 0 0 18px
+
+      &:last-child
+        &--active
+        border-radius: 0 18px 18px 0
+
+      &--active
+        background: #FC6345
+        box-shadow: $shadowStandard
+        color: $colorWhite
+
+  &__Body
+    margin-top: 12px

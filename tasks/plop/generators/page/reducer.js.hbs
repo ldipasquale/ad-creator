@@ -1,0 +1,13 @@
+export default function reducer(state = {}, action) {
+  switch (action.type) {
+    case ACTION_TYPE:
+      return {
+        ...state,
+        modifier: action.value,
+      };
+    break;
+    default:
+      return state;
+    break;
+  }
+};

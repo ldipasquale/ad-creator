@@ -1,0 +1,35 @@
+$borderRadius: $spacingXLarge
+$margin: $spacingMedium
+
+&
+  background-image: linear-gradient(45deg, #36365A 0%, #C14C35 100%)
+  position: absolute
+  width: 100%
+  min-height: 100%
+  padding: $spacingXHuge
+
+  &__Wrapper
+    content: ''
+    background: $colorGray
+    border-radius: $borderRadius
+    position: absolute
+    z-index: 0
+    top: $margin
+    left: $margin
+    right: $margin
+    bottom: $margin
+
+  &__Container
+    position: relative
+    z-index: 1
+    text-align: center
+
+  &__Footer
+    text-align: left
+    position: absolute
+    background: $colorDarkGray
+    left: 0
+    right: 0
+    bottom: 0
+    padding: $spacingXLarge
+    border-radius: 0 0 $borderRadius $borderRadius

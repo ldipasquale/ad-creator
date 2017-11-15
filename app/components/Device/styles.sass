@@ -1,0 +1,14 @@
+@import "~stylesheets/variables/index"
+@import "./sass/devices"
+
+.jampp
+  &__Device
+    @import "./sass/mobile"
+
+    /* Small Devices, Tablets */
+    @media only screen and (min-width: $breakpointSmall)
+      @import "./sass/tablet"
+
+    /* Large Devices, Wide Screens */
+    @media only screen and (min-width: $breakpointLarge)
+      @import "./sass/desktop"

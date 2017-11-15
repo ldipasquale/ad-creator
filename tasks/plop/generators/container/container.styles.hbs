@@ -1,0 +1,17 @@
+@import "~stylesheets/variables/index.scss";
+
+.jampp {
+  &__{{ properCase name }} {
+    @import "./scss/mobile.scss";
+
+    /* Small Devices, Tablets */
+    @media only screen and (min-width: $breakpoint-small) {
+      @import "./scss/tablet.scss";
+    }
+
+    /* Large Devices, Wide Screens */
+    @media only screen and (min-width: $breakpoint-large) {
+      @import "./scss/desktop.scss";
+    }
+  }
+}
