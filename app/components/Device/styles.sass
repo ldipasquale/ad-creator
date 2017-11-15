@@ -1,5 +1,4 @@
 @import "~stylesheets/variables/index"
-@import "./sass/devices"
 
 .jampp
   &__Device
@@ -12,3 +11,6 @@
     /* Large Devices, Wide Screens */
     @media only screen and (min-width: $breakpointLarge)
       @import "./sass/desktop"
+
+    &__Model
+      @import "./sass/devices"

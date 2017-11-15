@@ -37,8 +37,6 @@ class Ad extends React.Component {
       const selectedElementProperties = selectedElement.getBoundingClientRect()
       const selectedElementBorderRadius = parseInt(getComputedStyle(selectedElement).getPropertyValue("border-radius"))
 
-      console.log(selectedElementProperties.top - adElementProperties.top)
-
       return this.props.onSelectElement({
         width: Math.floor(selectedElementProperties.width) + 10,
         height: Math.ceil(selectedElementProperties.height) + 10,

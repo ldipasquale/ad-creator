@@ -12,7 +12,7 @@ const Device = ({ children, model, small }) => (
     })}
   >
     <div className="jampp__Device__Content">
-      <div className={`marvel-device ${model}`}>
+      <div className={`jampp__Device__Model jampp__Device__Model--${model}`}>
         <div className="top-bar" />
         <div className="sleep" />
         <div className="volume" />
