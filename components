@@ -10,6 +10,7 @@ GridPosition
 Ad
   Field
     Handler
+      FontStyleHandler
       FontHandler
       FontColorHandler
       BackgroundColorHandler

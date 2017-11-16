@@ -1,3 +1,5 @@
+$adOverlayBackground: #000
+
 &
   text-align: center
 
@@ -7,15 +9,29 @@
   &__Content
     text-align: center
     position: relative
+    cursor: pointer
 
     .ad
       left: 0
       top: 0
       text-align: left
 
-  &__HighlightedItem
+  &__Selection
     position: absolute
-    box-sizing: border-box
-    box-shadow: 0 0 0 5000px rgba(0, 0, 0, .5)
-    border-radius: 3px
-    z-index: 1000
+    left: 0
+    color: #000
+    transform: scale3d(1 / $deviceScaleRatio, 1 / $deviceScaleRatio, 1 / $deviceScaleRatio)
+    transform-origin: 50% 0
+
+    &__Overlay
+      pointer-events: none
+      position: absolute
+      box-sizing: border-box
+      border-radius: 3px
+      z-index: 1
+      background: rgba($adOverlayBackground, 0.65)
+
+      &--internal
+        background: transparent
+        box-shadow: 0 0 0 5000px rgba($adOverlayBackground, 0.6)
+

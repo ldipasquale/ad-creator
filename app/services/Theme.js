@@ -27,12 +27,10 @@ function get(id) {
         id: 'callToAction',
         type: fieldTypes.CONTAINED_TEXT,
       },
-      /*
       {
         id: 'rating',
         type: 'container',
       },
-      */
     ],
   })
 }

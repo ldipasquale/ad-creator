@@ -10,5 +10,9 @@
     transform-origin: 50% 50%
 
   &__Content
-    transform: scale3d(0.8, 0.8, 0.8)
+    transform: scale3d($deviceScaleRatio, $deviceScaleRatio, $deviceScaleRatio)
     transform-origin: 50% 0
+
+    .screen
+      background: url('/app-context.jpg') !important
+      background-size: cover !important

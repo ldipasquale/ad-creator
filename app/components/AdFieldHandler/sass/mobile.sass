@@ -1,0 +1,29 @@
+&
+  position: absolute
+  z-index: 2
+  margin-top: $spacingStandard
+
+  &__Content
+    box-sizing: border-box
+    background: #fff
+    box-shadow: 0 3px 10px 0 rgba(#000, 0.06)
+    padding: $spacingTiny $spacingMedium
+    border-radius: 100px
+    display: inline-block
+    font-size: $fontSizeLarge
+    color: $fontColorLighter
+
+    > *
+      display: inline-block
+      padding-right: $spacingStandard
+      margin-right: $spacingStandard
+      border-right: 0.5px solid $colorLightGray
+      line-height: 1.5em
+
+      &:first-child,
+      &:last-child
+
+      &:last-child
+        padding-right: 0
+        margin-right: 0
+        border-right: 0

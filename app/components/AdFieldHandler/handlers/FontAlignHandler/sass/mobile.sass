@@ -1,0 +1,42 @@
+&
+  &__Button
+    display: inline-block
+    font-family: 'Georgia'
+    cursor: pointer
+    margin-right: $spacingStandard
+    position: relative
+    top: -1px
+    width: 14px
+    height: 9px
+
+    &:last-child
+      margin-right: 0
+
+    &--selected &__Line
+      background: $fontColorLighterHiglighted
+
+    &--type-left &__Line--first,
+    &--type-left &__Line--third
+      width: 10px
+
+    &--type-right &__Line--first,
+    &--type-right &__Line--third
+      width: 10px
+      left: 4px
+
+    &__Line
+      display: block
+      background: $fontColorLighter
+      width: 14px
+      height: .75px
+      position: absolute
+
+      &--first
+        top: 0
+
+      &--second
+        top: 4px
+
+      &--third
+        top: 8px
+
