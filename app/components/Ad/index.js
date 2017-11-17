@@ -7,7 +7,7 @@ import AdFieldHandler from 'components/AdFieldHandler'
 
 import Theme from 'services/Theme'
 
-import fieldTypes from 'constants/fieldTypes'
+import { mapModifiersToStyle } from 'util/modifiers'
 
 import 'css-scoper'
 import './styles.sass'
@@ -18,7 +18,8 @@ class Ad extends React.Component {
 
     this.state = {}
 
-    this.handleClick = this.handleClick.bind(this)
+    this.handleElementClick = this.handleElementClick.bind(this)
+    this.handleModifierChange = this.handleModifierChange.bind(this)
 
     Theme.get().then(theme => this.availableFields = theme.fields)
   }
@@ -27,7 +28,7 @@ class Ad extends React.Component {
     this.adElementProperties = this.adElement.getBoundingClientRect()
   }
 
-  handleClick(event) {
+  handleElementClick(event) {
     event.preventDefault()
 
     let selectedElement = event.target
@@ -47,6 +48,13 @@ class Ad extends React.Component {
     }
 
     return this.props.onCancelSelection()
+  }
+
+  handleModifierChange(elementId, modifiers) {
+    this.props.onChangeModifiers({
+      ...this.props.modifiers,
+      [elementId]: modifiers,
+    })
   }
 
   componentWillReceiveProps(nextProps) {
@@ -71,6 +79,7 @@ class Ad extends React.Component {
 
         this.setState({
           highlightedElement: {
+            id: nextProps.selectedElement.id,
             blockOutside: nextProps.selectedElement.id !== 'container',
             style: {
               width: Math.floor(selectedElementProperties.width) + extraMargin,
@@ -87,6 +96,18 @@ class Ad extends React.Component {
     } else {
       this.setState({
         highlightedElement: null,
+      })
+    }
+
+    if (nextProps.modifiers) {
+      Object.entries(nextProps.modifiers).forEach(([elementId, elementModifiers]) => {
+        const element = this.adElement.querySelector(`[data-field=${elementId}`)
+
+        const elementStyle = mapModifiersToStyle(elementModifiers)
+
+        Object.entries(elementStyle).forEach(([styleId, styleValue]) => {
+          element.style[styleId] = styleValue
+        })
       })
     }
   }
@@ -106,17 +127,19 @@ class Ad extends React.Component {
           dangerouslySetInnerHTML={{
             __html: this.props.children,
           }}
-          onClick={this.handleClick}
+          onClick={this.handleElementClick}
           ref={element => this.adContent = element}
         />
 
-        {this.state.highlightedElement && (
+        {this.state.highlightedElement && this.props.modifiers[this.state.highlightedElement.id] && (
           <div className="jampp__Ad__Selection">
             <AdFieldHandler
+              onChange={modifiers => this.handleModifierChange(this.state.highlightedElement.id, modifiers)}
+              modifiers={this.props.modifiers[this.state.highlightedElement.id]}
               style={{
-                left: this.state.highlightedElement.style.left,
+                left: this.state.highlightedElement.style.left - 30,
                 top: this.state.highlightedElement.style.top + this.state.highlightedElement.style.height,
-                width: this.state.highlightedElement.style.width,
+                width: this.state.highlightedElement.style.width + 60,
               }}
             />
 

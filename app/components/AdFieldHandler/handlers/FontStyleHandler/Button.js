@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
 
+import AdFieldHandlerButton from 'components/AdFieldHandler/Button'
+
 const typesContent = {
   bold: 'B',
   italic: 'I',
@@ -9,16 +11,17 @@ const typesContent = {
 }
 
 const FontStyleHandler = ({ type, selected, onChange }) => (
-  <div
+  <AdFieldHandlerButton
     className={cx({
       jampp__AdFieldHandler__FontStyleHandler__Button: true,
       [`jampp__AdFieldHandler__FontStyleHandler__Button--type-${type}`]: true,
       'jampp__AdFieldHandler__FontStyleHandler__Button--selected': selected,
     })}
+    selected={selected}
     onClick={() => onChange(!selected)}
   >
     {typesContent[type]}
-  </div>
+  </AdFieldHandlerButton>
 )
 
 FontStyleHandler.propTypes = {

@@ -1,31 +1,31 @@
-import fieldTypes from 'constants/fieldTypes'
+import elements from 'constants/elements'
 
 function get(id) {
   return Promise.resolve({
     fields: [
       {
         id: 'container',
-        type: fieldTypes.CONTAINER,
+        type: elements.CONTAINER,
       },
       {
         id: 'adContainer',
-        type: fieldTypes.CONTAINER,
+        type: elements.CONTAINER,
       },
       {
         id: 'media',
-        type: fieldTypes.IMAGE,
+        type: elements.IMAGE,
       },
       {
         id: 'headline',
-        type: fieldTypes.TEXT,
+        type: elements.TEXT,
       },
       {
         id: 'promoText',
-        type: fieldTypes.TEXT,
+        type: elements.TEXT,
       },
       {
         id: 'callToAction',
-        type: fieldTypes.CONTAINED_TEXT,
+        type: elements.CONTAINED_TEXT,
       },
       {
         id: 'rating',

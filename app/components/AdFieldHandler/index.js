@@ -4,45 +4,48 @@ import cx from 'classnames'
 
 import FontStyleHandler from './handlers/FontStyleHandler'
 import FontAlignHandler from './handlers/FontAlignHandler'
+import FontSettingsHandler from './handlers/FontSettingsHandler'
+
+import modifiersValues from 'constants/modifiers'
+import fontAlignValues from 'constants/modifiers/fontAlign'
 
 import './styles.sass'
 
-class AdFieldHandler extends React.Component {
-  constructor(props) {
-    super(props)
+const AdFieldHandler = ({ onChange, modifiers, style }) => {
+  const handleModifiersChange = (newModifiers) => onChange({
+    ...modifiers,
+    ...newModifiers,
+  })
 
-    this.state = {}
+  return (
+    <div
+      className="jampp__AdFieldHandler"
+      style={style}
+    >
+      <div className="jampp__AdFieldHandler__Content">
+        <FontStyleHandler
+          onChange={handleModifiersChange}
+          value={{
+            [modifiersValues.IS_FONT_BOLD]: modifiers[modifiersValues.IS_FONT_BOLD],
+            [modifiersValues.IS_FONT_ITALIC]: modifiers[modifiersValues.IS_FONT_ITALIC],
+            [modifiersValues.IS_FONT_UNDERLINE]: modifiers[modifiersValues.IS_FONT_UNDERLINE],
+          }}
+        />
 
-    this.handleModifierChange = this.handleModifierChange.bind(this)
-  }
+        <FontAlignHandler
+          onChange={value => handleModifiersChange({ [modifiersValues.FONT_ALIGN]: value })}
+          value={modifiers[modifiersValues.FONT_ALIGN]}
+        />
 
-  handleModifierChange(newModifiers) {
-    this.setState({
-      ...this.state,
-      ...newModifiers,
-    })
-  }
-
-  render() {
-    return (
-      <div
-        className="jampp__AdFieldHandler"
-        style={this.props.style}
-      >
-        <div className="jampp__AdFieldHandler__Content">
-          <FontStyleHandler
-            onChange={this.handleModifierChange}
-            value={this.state}
-          />
-
-          <FontAlignHandler
-            onChange={this.handleModifierChange}
-            value={this.state}
-          />
-        </div>
+        <FontSettingsHandler
+          onChange={handleModifiersChange}
+          value={{
+            [modifiersValues.FONT_COLOR]: modifiers[modifiersValues.FONT_COLOR],
+          }}
+        />
       </div>
-    )
-  }
+    </div>
+  )
 }
 
 AdFieldHandler.propTypes = {

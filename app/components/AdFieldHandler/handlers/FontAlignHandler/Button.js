@@ -2,13 +2,16 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
 
+import AdFieldHandlerButton from 'components/AdFieldHandler/Button'
+
 const FontAlignHandler = ({ type, selected, onChange }) => (
-  <div
+  <AdFieldHandlerButton
     className={cx({
       jampp__AdFieldHandler__FontAlignHandler__Button: true,
       [`jampp__AdFieldHandler__FontAlignHandler__Button--type-${type}`]: true,
-      'jampp__AdFieldHandler__FontAlignHandler__Button--selected': selected,
     })}
+    selected={selected}
+    selectedClassName="jampp__AdFieldHandler__FontAlignHandler__Button--selected"
     onClick={onChange}
   >
     <span
@@ -31,7 +34,7 @@ const FontAlignHandler = ({ type, selected, onChange }) => (
         'jampp__AdFieldHandler__FontAlignHandler__Button__Line--third',
       )}
     />
-  </div>
+  </AdFieldHandlerButton>
 )
 
 FontAlignHandler.propTypes = {

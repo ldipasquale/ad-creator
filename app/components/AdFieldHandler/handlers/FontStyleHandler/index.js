@@ -4,9 +4,11 @@ import cx from 'classnames'
 
 import FontStyleHandlerButton from './Button'
 
+import modifiers from 'constants/modifiers'
+
 import './styles.sass'
 
-const FontStyleHandler = ({ style, value, onChange }) => {
+const FontStyleHandler = ({ value, onChange }) => {
   const handleChange = (modifier, value) => onChange({
     ...value,
     [modifier]: value,
@@ -16,20 +18,20 @@ const FontStyleHandler = ({ style, value, onChange }) => {
     <div className="jampp__AdFieldHandler__FontStyleHandler">
       <FontStyleHandlerButton
         type="bold"
-        selected={value.fontBold}
-        onChange={value => handleChange('fontBold', value)}
+        selected={value[modifiers.IS_FONT_BOLD]}
+        onChange={value => handleChange(modifiers.IS_FONT_BOLD, value)}
       />
 
       <FontStyleHandlerButton
         type="italic"
-        selected={value.fontItalic}
-        onChange={value => handleChange('fontItalic', value)}
+        selected={value[modifiers.IS_FONT_ITALIC]}
+        onChange={value => handleChange(modifiers.IS_FONT_ITALIC, value)}
       />
 
       <FontStyleHandlerButton
         type="underline"
-        selected={value.fontUnderline}
-        onChange={value => handleChange('fontUnderline', value)}
+        selected={value[modifiers.IS_FONT_UNDERLINE]}
+        onChange={value => handleChange(modifiers.IS_FONT_UNDERLINE, value)}
       />
     </div>
   )
