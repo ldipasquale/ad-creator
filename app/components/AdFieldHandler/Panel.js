@@ -24,9 +24,12 @@ class AdFieldHandlerPanel extends React.Component {
 
 AdFieldHandlerPanel.propTypes = {
   children: PropTypes.node.isRequired,
-  value: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
   isOpen: PropTypes.bool.isRequired,
+  onRef: PropTypes.func,
+}
+
+AdFieldHandlerPanel.defaultProps = {
+  onRef: null,
 }
 
 export default AdFieldHandlerPanel

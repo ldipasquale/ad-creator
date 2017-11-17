@@ -16,7 +16,7 @@ const FontSettingsHandler = ({ value, onChange }) => {
     >
       <FontColorHandler
         value={value[modifiers.FONT_COLOR]}
-        onChange={() => console.log('a')}
+        onChange={color => onChange({ [modifiers.FONT_COLOR]: color })}
       />
 
       <FontFamilyHandler

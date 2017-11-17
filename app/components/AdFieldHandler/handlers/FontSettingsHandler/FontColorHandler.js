@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import cx from 'classnames'
 
 import AdFieldHandlerPaneledButton from 'components/AdFieldHandler/PaneledButton'
+import ColorPicker from 'components/ColorPicker'
 
 const FontColorHandler = ({ value, onChange }) => (
   <AdFieldHandlerPaneledButton
@@ -12,10 +13,11 @@ const FontColorHandler = ({ value, onChange }) => (
         backgroundColor: value,
       },
     }}
-    value={value}
-    onChange={onChange}
   >
-    FontColor
+    <ColorPicker
+      value={value}
+      onChange={onChange}
+    />
   </AdFieldHandlerPaneledButton>
 )
 

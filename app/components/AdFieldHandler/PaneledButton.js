@@ -51,9 +51,7 @@ class AdFieldHandlerPaneledButton extends React.Component {
 
         <AdFieldHandlerPanel
           isOpen={this.state.isPanelOpened}
-          value={this.props.value}
-          onChange={this.props.onChange}
-          onRef={element => this.panelElement = element}>
+          onRef={element => this.panelElement = element}
         >
           {this.props.children}
         </AdFieldHandlerPanel>
