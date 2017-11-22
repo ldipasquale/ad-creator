@@ -4,7 +4,8 @@ import cx from 'classnames'
 
 import modifiers from 'constants/modifiers'
 
-import ContainerBackgroundHandler from './ContainerBackgroundHandler'
+import BackgroundHandler from './BackgroundHandler'
+import BorderHandler from './BorderHandler'
 
 import './styles.sass'
 
@@ -12,7 +13,12 @@ const FontSettingsHandler = ({ value, onChange }) => (
   <span
     className="jampp__AdFieldHandler__FontSettingsHandler"
   >
-    <ContainerBackgroundHandler
+    <BackgroundHandler
+      value={value[modifiers.BACKGROUND_COLOR]}
+      onChange={background => onChange({ [modifiers.BACKGROUND_COLOR]: background })}
+    />
+
+    <BorderHandler
       value={value[modifiers.BACKGROUND_COLOR]}
       onChange={background => onChange({ [modifiers.BACKGROUND_COLOR]: background })}
     />

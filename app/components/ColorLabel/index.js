@@ -4,9 +4,12 @@ import cx from 'classnames'
 
 import './styles.sass'
 
-const ColorLabel = ({ value }) => (
+const ColorLabel = ({ className, value }) => (
   <span
-    className="jampp__ColorLabel"
+    className={cx({
+      jampp__ColorLabel: true,
+      [className]: className !== null,
+    })}
     style={{
       backgroundColor: value,
     }}
@@ -14,9 +17,13 @@ const ColorLabel = ({ value }) => (
 )
 
 ColorLabel.propTypes = {
+  className: PropTypes.string,
+  value: PropTypes.string,
 }
 
 ColorLabel.defaultProps = {
+  className: null,
+  value: '#fff',
 }
 
 export default ColorLabel

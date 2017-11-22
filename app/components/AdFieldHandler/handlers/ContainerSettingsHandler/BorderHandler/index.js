@@ -6,10 +6,14 @@ import AdFieldHandlerPaneledButton from 'components/AdFieldHandler/PaneledButton
 import ColorLabel from 'components/ColorLabel'
 import ColorPicker from 'components/ColorPicker'
 
-const FontColorHandler = ({ value, onChange }) => (
+const BorderHandler = ({ value, onChange }) => (
   <AdFieldHandlerPaneledButton
     buttonProps={{
-      children: <ColorLabel value={value} />,
+      children: (
+        <ColorLabel
+          className="jampp__AdFieldHandler__ContainerSettingsHandler__BorderHandler__Button"
+        />
+      ),
     }}
   >
     <ColorPicker
@@ -19,12 +23,12 @@ const FontColorHandler = ({ value, onChange }) => (
   </AdFieldHandlerPaneledButton>
 )
 
-FontColorHandler.propTypes = {
+BorderHandler.propTypes = {
   value: PropTypes.string,
 }
 
-FontColorHandler.defaultProps = {
+BorderHandler.defaultProps = {
   value: '#000',
 }
 
-export default FontColorHandler
+export default BorderHandler
