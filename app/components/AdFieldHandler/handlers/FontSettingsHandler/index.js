@@ -9,23 +9,21 @@ import FontFamilyHandler from './FontFamilyHandler'
 
 import './styles.sass'
 
-const FontSettingsHandler = ({ value, onChange }) => {
-  return (
-    <span
-      className="jampp__AdFieldHandler__FontSettingsHandler"
-    >
-      <FontColorHandler
-        value={value[modifiers.FONT_COLOR]}
-        onChange={color => onChange({ [modifiers.FONT_COLOR]: color })}
-      />
+const FontSettingsHandler = ({ value, onChange }) => (
+  <span
+    className="jampp__AdFieldHandler__FontSettingsHandler"
+  >
+    <FontColorHandler
+      value={value[modifiers.FONT_COLOR]}
+      onChange={color => onChange({ [modifiers.FONT_COLOR]: color })}
+    />
 
-      <FontFamilyHandler
-        value={value[modifiers.FONT_FAMILY]}
-        onChange={fontFamily => onChange({ [modifiers.FONT_FAMILY]: fontFamily })}
-      />
-    </span>
-  )
-}
+    <FontFamilyHandler
+      value={value[modifiers.FONT_FAMILY]}
+      onChange={fontFamily => onChange({ [modifiers.FONT_FAMILY]: fontFamily })}
+    />
+  </span>
+)
 
 FontSettingsHandler.propTypes = {
 }

@@ -73,7 +73,7 @@ class Ad extends React.Component {
         }
 
         const selectedElementProperties = selectedElement.getBoundingClientRect()
-        const selectedElementBorderRadius = parseInt(getComputedStyle(selectedElement).getPropertyValue("border-radius"))
+        const selectedElementBorderRadius = parseInt(getComputedStyle(selectedElement).getPropertyValue('border-radius'))
 
         this.setState({
           highlightedElement: {

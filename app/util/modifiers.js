@@ -4,35 +4,36 @@ function mapModifiersToStyle(modifiersValues) {
   const style = {}
 
   Object.entries(modifiersValues).forEach(([modifierId, modifierValue]) => {
-    let styleId, styleValue
+    let styleId,
+      styleValue
 
     switch (modifierId) {
       case modifiers.FONT_COLOR:
         styleId = 'color'
-      break;
+        break;
 
       case modifiers.FONT_FAMILY:
         styleId = 'fontFamily'
-      break;
+        break;
 
       case modifiers.FONT_ALIGN:
         styleId = 'textAlign'
-      break;
+        break;
 
       case modifiers.IS_FONT_BOLD:
         styleId = 'fontWeight'
         styleValue = modifierValue ? 600 : 400
-      break;
+        break;
 
       case modifiers.IS_FONT_ITALIC:
         styleId = 'fontStyle'
         styleValue = modifierValue ? 'italic' : 'normal'
-      break;
+        break;
 
       case modifiers.IS_FONT_UNDERLINE:
         styleId = 'textDecoration'
         styleValue = modifierValue ? 'underline' : 'none'
-      break;
+        break;
     }
 
     if (styleId) {

@@ -6,7 +6,7 @@ const FontFamilyLabel = ({ children, selected, onClick }) => (
   <div
     className={cx({
       jampp__AdFieldHandler__FontSettingsHandler__FontFamilyHandler__Label: true,
-      "jampp__AdFieldHandler__FontSettingsHandler__FontFamilyHandler__Label--selected": selected,
+      'jampp__AdFieldHandler__FontSettingsHandler__FontFamilyHandler__Label--selected': selected,
     })}
     style={{
       fontFamily: children,

@@ -4,6 +4,5 @@ import Theme from './'
 
 storiesOf('Theme', module)
   .add('Default', () => (
-    <Theme
-    />
+    <Theme />
   ))

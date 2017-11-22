@@ -4,6 +4,5 @@ import ColorPicker from './'
 
 storiesOf('ColorPicker', module)
   .add('Default', () => (
-    <ColorPicker
-    />
+    <ColorPicker />
   ))

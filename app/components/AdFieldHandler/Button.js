@@ -4,21 +4,21 @@ import cx from 'classnames'
 
 import './styles.sass'
 
-const AdFieldHandlerButton = ({ className, onClick, children, style, selectedClassName, selected }) => {
-  return (
-    <span
-      className={cx({
+const AdFieldHandlerButton = ({
+  className, onClick, children, style, selectedClassName, selected,
+}) => (
+  <span
+    className={cx({
         jampp__AdFieldHandler__Button: true,
         [selectedClassName]: selected,
         [className]: true,
       })}
-      onClick={onClick}
-      style={style}
-    >
-      {children}
-    </span>
-  )
-}
+    onClick={onClick}
+    style={style}
+  >
+    {children}
+  </span>
+)
 
 AdFieldHandlerButton.propTypes = {
   selectedClassName: PropTypes.string,

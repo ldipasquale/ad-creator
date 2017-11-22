@@ -4,6 +4,5 @@ import AdFieldHandler from './'
 
 storiesOf('AdFieldHandler', module)
   .add('Default', () => (
-    <AdFieldHandler
-    />
+    <AdFieldHandler />
   ))

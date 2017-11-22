@@ -8,7 +8,7 @@ import ColorPicker from 'components/ColorPicker'
 const FontColorHandler = ({ value, onChange }) => (
   <AdFieldHandlerPaneledButton
     buttonProps={{
-      className: "jampp__AdFieldHandler__FontSettingsHandler__FontColorHandler__Button",
+      className: 'jampp__AdFieldHandler__FontSettingsHandler__FontColorHandler__Button',
       style: {
         backgroundColor: value,
       },

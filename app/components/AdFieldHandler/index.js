@@ -12,7 +12,7 @@ import fontAlignValues from 'constants/modifiers/fontAlign'
 import './styles.sass'
 
 const AdFieldHandler = ({ onChange, modifiers, style }) => {
-  const handleModifiersChange = (newModifiers) => onChange({
+  const handleModifiersChange = newModifiers => onChange({
     ...modifiers,
     ...newModifiers,
   })

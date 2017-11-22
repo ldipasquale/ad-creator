@@ -10,8 +10,8 @@ import FontFamilyLabel from './Label'
 const FontFamilyHandler = ({ value, onChange }) => (
   <AdFieldHandlerPaneledButton
     buttonProps={{
-      className: "jampp__AdFieldHandler__FontSettingsHandler__FontFamilyHandler__Button",
-      children: 'Aa'
+      className: 'jampp__AdFieldHandler__FontSettingsHandler__FontFamilyHandler__Button',
+      children: 'Aa',
     }}
   >
     <Scroller>

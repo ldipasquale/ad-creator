@@ -4,6 +4,5 @@ import Scroller from './'
 
 storiesOf('Scroller', module)
   .add('Default', () => (
-    <Scroller
-    />
+    <Scroller />
   ))
