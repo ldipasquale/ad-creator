@@ -5,6 +5,8 @@ import cx from 'classnames'
 import Scroller from 'components/Scroller'
 import AdFieldHandlerPaneledButton from 'components/AdFieldHandler/PaneledButton'
 
+import fontFamilyValues from 'constants/modifiers/fontFamily'
+
 import FontFamilyLabel from './Label'
 
 const FontFamilyHandler = ({ value, onChange }) => (
@@ -15,9 +17,9 @@ const FontFamilyHandler = ({ value, onChange }) => (
     }}
   >
     <Scroller>
-      {['Arial', 'Open Sans', 'Courier', 'Helvetica Neue', 'Roboto', 'Palatino', 'Wawati SC'].map((fontFamily, index) => (
+      {fontFamilyValues.map((fontFamily, fontFamilyIndex) => (
         <FontFamilyLabel
-          key={index}
+          key={fontFamilyIndex}
           selected={fontFamily === value}
           onClick={onChange}
         >
@@ -33,7 +35,7 @@ FontFamilyHandler.propTypes = {
 }
 
 FontFamilyHandler.defaultProps = {
-  value: 'Arial',
+  value: fontFamilyValues[0],
 }
 
 export default FontFamilyHandler

@@ -5,12 +5,15 @@ import cx from 'classnames'
 import AdFieldHandlerButton from 'components/AdFieldHandler/Button'
 import AdFieldHandlerPanel from 'components/AdFieldHandler/Panel'
 
+const minPanelWidth = 170
+
 class AdFieldHandlerPaneledButton extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
       isPanelOpened: false,
+      panelStyle: null,
     }
 
     this.handleButtonClick = this.handleButtonClick.bind(this)
@@ -30,16 +33,34 @@ class AdFieldHandlerPaneledButton extends React.Component {
   }
 
   handleOutsideClick(event) {
-    if (this.panelElement.contains(event.target)) {
+    if (!this.panelElement || this.panelElement.contains(event.target)) {
       return
     }
 
     this.handleButtonClick()
   }
 
+  componentDidMount() {
+    const wrapperHandlerElementProperties = this.wrapperElement.parentElement.parentElement.getBoundingClientRect()
+
+    if (wrapperHandlerElementProperties.width < minPanelWidth) {
+      const negativeXPosition = (minPanelWidth - wrapperHandlerElementProperties.width) / 2 * -1
+
+      this.setState({
+        panelStyle: {
+          left: negativeXPosition,
+          right: negativeXPosition,
+        },
+      })
+    }
+  }
+
   render() {
     return (
-      <span className="jampp__AdFieldHandler__PaneledButton">
+      <span
+        className="jampp__AdFieldHandler__PaneledButton"
+        ref={element => this.wrapperElement = element}
+      >
         <AdFieldHandlerButton
           {...this.props.buttonProps}
           onClick={this.handleButtonClick}
@@ -47,6 +68,7 @@ class AdFieldHandlerPaneledButton extends React.Component {
             [this.props.buttonProps.className]: this.props.buttonProps.className !== undefined,
             jampp__AdFieldHandler__PaneledButton__Button: true,
           })}
+          selected={this.state.isPanelOpened}
         />
 
         <AdFieldHandlerPanel
@@ -54,6 +76,9 @@ class AdFieldHandlerPaneledButton extends React.Component {
           onRef={element => this.panelElement = element}
           {...this.props.className && {
             className: this.props.className,
+          }}
+          {...this.state.panelStyle && {
+            style: this.state.panelStyle,
           }}
         >
           {this.props.children}

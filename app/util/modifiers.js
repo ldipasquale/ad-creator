@@ -20,6 +20,10 @@ function mapModifiersToStyle(modifiersValues) {
         styleId = 'textAlign'
         break;
 
+      case modifiers.BACKGROUND_COLOR:
+        styleId = 'background'
+        break;
+
       case modifiers.IS_FONT_BOLD:
         styleId = 'fontWeight'
         styleValue = modifierValue ? 600 : 400

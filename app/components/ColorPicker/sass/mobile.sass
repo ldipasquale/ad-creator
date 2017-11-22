@@ -1,1 +1,47 @@
+$colorPickerHeight: 96px
+$hueWidth: 8px
+$pointerSize: 8px
+
 &
+  line-height: 0
+
+  &__Saturation,
+  &__Hue
+    display: inline-block
+    height: $colorPickerHeight
+    position: relative
+    border-radius: $spacingStandard
+    overflow: hidden
+
+  &__Saturation
+    width: calc(100% - #{$hueWidth} - #{$spacingStandard})
+
+  &__Hue
+    width: $hueWidth
+    margin-left: $spacingStandard
+
+  &__Pointer
+    display: inline-block
+    width: $pointerSize
+    height: $pointerSize
+    border-radius: 100%
+    background: rgba(#fff, 0.5)
+    border: 1px solid #fff
+    box-shadow: 0 1px 3px 0 rgba(#000, 0.5)
+
+  &__Saturation &__Pointer
+    transform: translate($pointerSize / 2 * -1, $pointerSize / 2 * -1)
+
+  &__Hue &__Pointer
+    transform: translate(0, $pointerSize / 2 * -1)
+
+  &__ColorInput
+    position: absolute
+    bottom: $spacingStandard
+    left: 0
+    right: 0
+
+    input
+      text-align: center
+      color: #fff
+      font-size: $fontSizeXSmall

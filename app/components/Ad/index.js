@@ -78,6 +78,7 @@ class Ad extends React.Component {
         this.setState({
           highlightedElement: {
             id: nextProps.selectedElement.id,
+            type: nextProps.selectedElement.type,
             blockOutside: nextProps.selectedElement.id !== 'container',
             style: {
               width: Math.floor(selectedElementProperties.width) + extraMargin,
@@ -101,11 +102,13 @@ class Ad extends React.Component {
       Object.entries(nextProps.modifiers).forEach(([elementId, elementModifiers]) => {
         const element = this.adElement.querySelector(`[data-field=${elementId}`)
 
-        const elementStyle = mapModifiersToStyle(elementModifiers)
+        if (element) {
+          const elementStyle = mapModifiersToStyle(elementModifiers)
 
-        Object.entries(elementStyle).forEach(([styleId, styleValue]) => {
-          element.style[styleId] = styleValue
-        })
+          Object.entries(elementStyle).forEach(([styleId, styleValue]) => {
+            element.style[styleId] = styleValue
+          })
+        }
       })
     }
   }
@@ -134,6 +137,7 @@ class Ad extends React.Component {
             {this.state.isEditingElement && (
               <AdFieldHandler
                 onChange={modifiers => this.handleModifierChange(this.state.highlightedElement.id, modifiers)}
+                type={this.state.highlightedElement.type}
                 modifiers={this.props.modifiers[this.state.highlightedElement.id]}
                 style={{
                   left: this.state.highlightedElement.style.left - 30,

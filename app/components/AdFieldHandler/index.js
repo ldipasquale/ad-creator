@@ -1,21 +1,29 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import stylePropType from 'react-style-proptype'
 import cx from 'classnames'
 
-import FontStyleHandler from './handlers/FontStyleHandler'
-import FontAlignHandler from './handlers/FontAlignHandler'
-import FontSettingsHandler from './handlers/FontSettingsHandler'
+import elements from 'constants/elements'
 
-import modifiersValues from 'constants/modifiers'
-import fontAlignValues from 'constants/modifiers/fontAlign'
+import TextHandler from './types/TextHandler'
+import ContainerHandler from './types/ContainerHandler'
+import ContainerTextHandler from './types/ContainerTextHandler'
 
 import './styles.sass'
 
-const AdFieldHandler = ({ onChange, modifiers, style }) => {
+const componentsByElementsKind = {
+  [elements.TEXT]: TextHandler,
+  [elements.CONTAINER]: ContainerHandler,
+  [elements.CONTAINED_TEXT]: ContainerTextHandler,
+}
+
+const AdFieldHandler = ({ type, onChange, modifiers, style }) => {
   const handleModifiersChange = newModifiers => onChange({
     ...modifiers,
     ...newModifiers,
   })
+
+  const HandlerComponent = componentsByElementsKind[type]
 
   return (
     <div
@@ -23,26 +31,9 @@ const AdFieldHandler = ({ onChange, modifiers, style }) => {
       style={style}
     >
       <div className="jampp__AdFieldHandler__Content">
-        <FontStyleHandler
-          onChange={handleModifiersChange}
-          value={{
-            [modifiersValues.IS_FONT_BOLD]: modifiers[modifiersValues.IS_FONT_BOLD],
-            [modifiersValues.IS_FONT_ITALIC]: modifiers[modifiersValues.IS_FONT_ITALIC],
-            [modifiersValues.IS_FONT_UNDERLINE]: modifiers[modifiersValues.IS_FONT_UNDERLINE],
-          }}
-        />
-
-        <FontAlignHandler
-          onChange={value => handleModifiersChange({ [modifiersValues.FONT_ALIGN]: value })}
-          value={modifiers[modifiersValues.FONT_ALIGN]}
-        />
-
-        <FontSettingsHandler
-          onChange={handleModifiersChange}
-          value={{
-            [modifiersValues.FONT_COLOR]: modifiers[modifiersValues.FONT_COLOR],
-            [modifiersValues.FONT_FAMILY]: modifiers[modifiersValues.FONT_FAMILY],
-          }}
+        <HandlerComponent
+          onChangeModifiers={handleModifiersChange}
+          modifiers={modifiers}
         />
       </div>
     </div>
@@ -50,9 +41,10 @@ const AdFieldHandler = ({ onChange, modifiers, style }) => {
 }
 
 AdFieldHandler.propTypes = {
-}
-
-AdFieldHandler.defaultProps = {
+  type: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  modifiers: PropTypes.object.isRequired,
+  style: stylePropType.isRequired,
 }
 
 export default AdFieldHandler
