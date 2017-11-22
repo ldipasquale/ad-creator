@@ -21,7 +21,7 @@ const FontSettingsHandler = ({ value, onChange }) => {
 
       <FontFamilyHandler
         value={value[modifiers.FONT_FAMILY]}
-        onChange={() => console.log('a')}
+        onChange={fontFamily => onChange({ [modifiers.FONT_FAMILY]: fontFamily })}
       />
     </span>
   )

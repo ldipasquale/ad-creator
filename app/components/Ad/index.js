@@ -39,15 +39,13 @@ class Ad extends React.Component {
       selectedField = this.availableFields.find(field => field.id === selectedElement.dataset.field)
     }
 
-    if (selectedField) {
-      if (this.props.selectedElement && this.props.selectedElement.id === selectedField.id) {
-        return this.props.onCancelSelection()
-      }
-
-      return this.props.onSelectElement(selectedField)
+    if (selectedField === null || (this.props.selectedElement && this.props.selectedElement.id === selectedField.id)) {
+      this.setState({ isEditingElement: false })
+      return this.props.onCancelSelection()
     }
 
-    return this.props.onCancelSelection()
+    this.setState({ isEditingElement: true })
+    return this.props.onSelectElement(selectedField)
   }
 
   handleModifierChange(elementId, modifiers) {
@@ -90,7 +88,7 @@ class Ad extends React.Component {
                 borderRadius: `${selectedElementBorderRadius + extraBorderRadius}px`,
               },
             },
-          }
+          },
         })
       }
     } else {
@@ -133,15 +131,17 @@ class Ad extends React.Component {
 
         {this.state.highlightedElement && this.props.modifiers[this.state.highlightedElement.id] && (
           <div className="jampp__Ad__Selection">
-            <AdFieldHandler
-              onChange={modifiers => this.handleModifierChange(this.state.highlightedElement.id, modifiers)}
-              modifiers={this.props.modifiers[this.state.highlightedElement.id]}
-              style={{
-                left: this.state.highlightedElement.style.left - 30,
-                top: this.state.highlightedElement.style.top + this.state.highlightedElement.style.height,
-                width: this.state.highlightedElement.style.width + 60,
-              }}
-            />
+            {this.state.isEditingElement && (
+              <AdFieldHandler
+                onChange={modifiers => this.handleModifierChange(this.state.highlightedElement.id, modifiers)}
+                modifiers={this.props.modifiers[this.state.highlightedElement.id]}
+                style={{
+                  left: this.state.highlightedElement.style.left - 30,
+                  top: this.state.highlightedElement.style.top + this.state.highlightedElement.style.height,
+                  width: this.state.highlightedElement.style.width + 60,
+                }}
+              />
+            )}
 
             <div
               className={cx({

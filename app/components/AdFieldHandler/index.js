@@ -41,6 +41,7 @@ const AdFieldHandler = ({ onChange, modifiers, style }) => {
           onChange={handleModifiersChange}
           value={{
             [modifiersValues.FONT_COLOR]: modifiers[modifiersValues.FONT_COLOR],
+            [modifiersValues.FONT_FAMILY]: modifiers[modifiersValues.FONT_FAMILY],
           }}
         />
       </div>

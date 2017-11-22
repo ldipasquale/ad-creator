@@ -11,6 +11,10 @@ function mapModifiersToStyle(modifiersValues) {
         styleId = 'color'
       break;
 
+      case modifiers.FONT_FAMILY:
+        styleId = 'fontFamily'
+      break;
+
       case modifiers.FONT_ALIGN:
         styleId = 'textAlign'
       break;

@@ -1,0 +1,19 @@
+$scrollBarWidth: 2px
+
+&
+  height: 100px
+  overflow-y: scroll
+  text-align: left
+
+  &::-webkit-scrollbar
+    width: $scrollBarWidth
+
+    &-track,
+    &-thumb
+      border-radius: $scrollBarWidth
+
+    &-track
+      background-color: $colorLighterGray
+
+    &-thumb
+      background-color: $colorLightGray

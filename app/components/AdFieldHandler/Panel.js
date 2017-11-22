@@ -4,31 +4,30 @@ import cx from 'classnames'
 
 import './styles.sass'
 
-class AdFieldHandlerPanel extends React.Component {
-  render() {
-    return (
-      <div
-        className={cx({
-          jampp__AdFieldHandler__Panel: true,
-          "jampp__AdFieldHandler__Panel--open": this.props.isOpen,
-        })}
-        {...this.props.onRef && {
-          ref: this.props.onRef,
-        }}
-      >
-        {this.props.children}
-      </div>
-    )
-  }
-}
+const AdFieldHandlerPanel = ({ className, onRef, isOpen, children }) => (
+  <div
+    className={cx({
+      jampp__AdFieldHandler__Panel: true,
+      "jampp__AdFieldHandler__Panel--open": isOpen,
+      [className]: className !== null,
+    })}
+    {...onRef && {
+      ref: onRef,
+    }}
+  >
+    {children}
+  </div>
+)
 
 AdFieldHandlerPanel.propTypes = {
+  className: PropTypes.string,
   children: PropTypes.node.isRequired,
   isOpen: PropTypes.bool.isRequired,
   onRef: PropTypes.func,
 }
 
 AdFieldHandlerPanel.defaultProps = {
+  className: null,
   onRef: null,
 }
 
