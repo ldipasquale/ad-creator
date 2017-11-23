@@ -57,14 +57,14 @@ class Tabs extends React.PureComponent {
   render() {
     return (
       <div>
-        <div className="jampp__Tabs__Header">
+        <div className={this.props.classNames.header}>
           {this.state.tabs.map((tab, i) => (
             <span
               key={i} // eslint-disable-line react/no-array-index-key
               onClick={() => this.handleTabClick(i)}
               className={classNames({
-                jampp__Tabs__Header__Title: true,
-                'jampp__Tabs__Header__Title--active': i === this.state.activeTabIndex,
+                [this.props.classNames.headerItem]: true,
+                [this.props.classNames.headerActiveItem]: i === this.state.activeTabIndex,
                 [tab.headerClassName]: tab.headerClassName !== null,
               })}
             >
@@ -75,8 +75,7 @@ class Tabs extends React.PureComponent {
 
         <div
           className={classNames({
-            jampp__Tabs__Body: true,
-            [this.props.bodyClassName]: this.props.bodyClassName !== null,
+            [this.props.classNames.body]: true,
           })}
           style={this.props.bodyStyle}
         >
@@ -102,18 +101,28 @@ Tabs.propTypes = {
     PropTypes.func,
     PropTypes.string,
   ]),
-  bodyClassName: PropTypes.string,
   bodyStyle: stylePropType,
   children: PropTypes.arrayOf(PropTypes.node).isRequired,
   selectedTabPath: PropTypes.string,
+  classNames: PropTypes.shape({
+    header: PropTypes.string,
+    headerItem: PropTypes.string,
+    headerActiveItem: PropTypes.string,
+    body: PropTypes.string,
+  }),
 }
 
 Tabs.defaultProps = {
   contentWrapper: children => children,
   onChange: null,
-  bodyClassName: null,
   bodyStyle: {},
   selectedTabPath: null,
+  classNames: {
+    header: 'jampp__Tabs__Header',
+    headerItem: 'jampp__Tabs__Header__Title',
+    headerActiveItem: 'jampp__Tabs__Header__Title--active',
+    body: 'jampp__Tabs__Body',
+  },
 }
 
 export { Tabs, TabsItem }

@@ -9,35 +9,35 @@ import ColorLabel from 'components/ColorLabel'
 import ColorPicker from 'components/ColorPicker'
 import InputRange from 'components/InputRange'
 
-const BorderHandler = ({ value, onChange }) => (
+const ShadowHandler = ({ value, onChange }) => (
   <AdFieldHandlerPaneledButton
     buttonProps={{
       children: (
         <ColorLabel
-          className="jampp__AdFieldHandler__ContainerSettingsHandler__BorderHandler__Button"
+          className="jampp__AdFieldHandler__ContainerSettingsHandler__ShadowHandler__Button"
         />
       ),
-      selectedClassName: 'jampp__AdFieldHandler__ContainerSettingsHandler__BorderHandler__Button--selected',
+      selectedClassName: 'jampp__AdFieldHandler__ContainerSettingsHandler__ShadowHandler__Button--selected',
     }}
   >
     <InputRange
-      value={value[modifiers.BORDER_SIZE]}
-      onChange={value => onChange({ [modifiers.BORDER_SIZE]: value })}
+      value={value[modifiers.SHADOW_SIZE]}
+      onChange={value => onChange({ [modifiers.SHADOW_SIZE]: value })}
     />
 
     <ColorPicker
-      color={value[modifiers.BORDER_COLOR]}
-      onChange={color => onChange({ [modifiers.BORDER_COLOR]: color.hex })}
+      color={value[modifiers.SHADOW_COLOR]}
+      onChange={color => onChange({ [modifiers.SHADOW_COLOR]: color.hex })}
     />
   </AdFieldHandlerPaneledButton>
 )
 
-BorderHandler.propTypes = {
+ShadowHandler.propTypes = {
   value: PropTypes.shape({
-    [modifiers.BORDER_COLOR]: PropTypes.string,
-    [modifiers.BORDER_SIZE]: PropTypes.number,
+    [modifiers.SHADOW_COLOR]: PropTypes.string,
+    [modifiers.SHADOW_SIZE]: PropTypes.number,
   }).isRequired,
   onChange: PropTypes.func.isRequired,
 }
 
-export default BorderHandler
+export default ShadowHandler

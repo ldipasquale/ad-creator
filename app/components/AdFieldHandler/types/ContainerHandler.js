@@ -12,9 +12,7 @@ const TextHandler = ({ onChangeModifiers, modifiers }) => (
   <Wrapper>
     <ContainerSettingsHandler
       onChange={onChangeModifiers}
-      value={{
-        [modifiersValues.BACKGROUND_COLOR]: modifiers[modifiersValues.BACKGROUND_COLOR],
-      }}
+      value={modifiers}
     />
   </Wrapper>
 )

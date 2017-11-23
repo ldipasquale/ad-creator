@@ -25,7 +25,7 @@ function get(id) {
       },
       {
         id: 'callToAction',
-        type: elements.CONTAINED_TEXT,
+        type: elements.CONTAINER,
       },
       {
         id: 'rating',

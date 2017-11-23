@@ -2,12 +2,30 @@ import modifiers from 'constants/modifiers'
 
 function mapModifiersToStyle(modifiersValues) {
   const style = {}
+  const borderStyle = {}
+  const shadowStyle = {}
 
   Object.entries(modifiersValues).forEach(([modifierId, modifierValue]) => {
     let styleId,
       styleValue
 
     switch (modifierId) {
+      case modifiers.BORDER_COLOR:
+        borderStyle.color = modifierValue
+        break;
+
+      case modifiers.BORDER_SIZE:
+        borderStyle.size = parseInt(modifierValue, 10)
+        break;
+
+      case modifiers.SHADOW_COLOR:
+        shadowStyle.color = modifierValue
+        break;
+
+      case modifiers.SHADOW_SIZE:
+        shadowStyle.size = modifierValue
+        break;
+
       case modifiers.FONT_COLOR:
         styleId = 'color'
         break;
@@ -44,6 +62,18 @@ function mapModifiersToStyle(modifiersValues) {
       style[styleId] = styleValue || modifierValue
     }
   })
+
+  if (borderStyle.size > 0 && borderStyle.color !== undefined) {
+    style.border = `${borderStyle.size}px solid ${borderStyle.color}`
+    style.transform = `translateY(${borderStyle.size}px)`
+  } else {
+    style.border = 'none'
+    style.transform = 'none'
+  }
+
+  if (shadowStyle.size > 0 && shadowStyle.color !== undefined) {
+    style.boxShadow = `0 ${shadowStyle.size}px 0 ${shadowStyle.color}`
+  }
 
   return style
 }

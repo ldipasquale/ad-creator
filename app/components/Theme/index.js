@@ -18,9 +18,11 @@ class Theme extends React.Component {
       modifiers: {
         container: {
           [modifiers.BACKGROUND_COLOR]: '#333',
+          [modifiers.BORDER_COLOR]: '#000',
         },
         adContainer: {
           [modifiers.BACKGROUND_COLOR]: '#fff',
+          [modifiers.BORDER_COLOR]: '#000',
         },
         headline: {
           [modifiers.FONT_FAMILY]: 'Helvetica Neue',
@@ -37,8 +39,10 @@ class Theme extends React.Component {
         callToAction: {
           [modifiers.FONT_FAMILY]: 'Helvetica Neue',
           [modifiers.FONT_COLOR]: '#fff',
+          [modifiers.BACKGROUND_COLOR]: '#00D061',
           [modifiers.IS_FONT_BOLD]: true,
           [modifiers.FONT_ALIGN]: fontAlignValues.CENTER,
+          [modifiers.BORDER_COLOR]: '#000',
         },
       },
     }
