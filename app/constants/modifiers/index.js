@@ -13,4 +13,5 @@ export default {
   SHADOW_DIRECTION: 'shadowDirection',
   SHADOW_SIZE: 'shadowSize',
   BACKGROUND_COLOR: 'backgroundColor',
+  BACKGROUND_COLOR_TO: 'backgroundColorTo',
 }

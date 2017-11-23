@@ -15,8 +15,11 @@ const ContainerSettingsHandler = ({ value, onChange }) => (
     className="jampp__AdFieldHandler__FontSettingsHandler"
   >
     <BackgroundHandler
-      value={value[modifiers.BACKGROUND_COLOR]}
-      onChange={background => onChange({ [modifiers.BACKGROUND_COLOR]: background })}
+      value={{
+        [modifiers.BACKGROUND_COLOR]: value[modifiers.BACKGROUND_COLOR],
+        [modifiers.BACKGROUND_COLOR_TO]: value[modifiers.BACKGROUND_COLOR_TO],
+      }}
+      onChange={onChange}
     />
 
     <BorderHandler

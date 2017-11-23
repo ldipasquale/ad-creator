@@ -5,12 +5,16 @@ import cx from 'classnames'
 import AdFieldHandlerPaneledButton from 'components/AdFieldHandler/PaneledButton'
 import ColorLabel from 'components/ColorLabel'
 import ColorPicker from 'components/ColorPicker'
+import GradientLabel from 'components/GradientLabel'
+import GradientPicker from 'components/GradientPicker'
 import { Tabs, TabsItem } from 'components/Tabs'
+
+import modifiers from 'constants/modifiers'
 
 const BackgroundHandler = ({ value, onChange }) => (
   <AdFieldHandlerPaneledButton
     buttonProps={{
-      children: <ColorLabel value={value} />,
+      children: <ColorLabel value={value[modifiers.BACKGROUND_COLOR]} />,
     }}
   >
     <Tabs
@@ -23,37 +27,51 @@ const BackgroundHandler = ({ value, onChange }) => (
     >
       <TabsItem title={(
         <ColorLabel
-          value="#f00000"
+          value={value[modifiers.BACKGROUND_COLOR]}
           className="jampp__AdFieldHandler__ContainerSettingsHandler__BackgroundHandler__ColorLabel"
         />
       )}>
         <ColorPicker
-          color="#f00000"
-          onChange={color => onChange(color.hex)}
+          color={value[modifiers.BACKGROUND_COLOR]}
+          onChange={color => onChange({
+            [modifiers.BACKGROUND_COLOR]: color.hex,
+          })}
         />
       </TabsItem>
 
       <TabsItem title={(
-        <ColorLabel
-          value="#00ffff"
+        <GradientLabel
           className="jampp__AdFieldHandler__ContainerSettingsHandler__BackgroundHandler__ColorLabel"
+          from={value[modifiers.BACKGROUND_COLOR]}
+          to={value[modifiers.BACKGROUND_COLOR_TO]}
+          type="linear"
         />
       )}>
-        <ColorPicker
-          color="#00ffff"
-          onChange={color => onChange(color.hex)}
+        <GradientPicker
+          from={value[modifiers.BACKGROUND_COLOR]}
+          to={value[modifiers.BACKGROUND_COLOR_TO]}
+          onChange={(from, to) => onChange({
+            [modifiers.BACKGROUND_COLOR]: from,
+            [modifiers.BACKGROUND_COLOR_TO]: to,
+          })}
         />
       </TabsItem>
 
       <TabsItem title={(
-        <ColorLabel
-          value="#00D061"
+        <GradientLabel
           className="jampp__AdFieldHandler__ContainerSettingsHandler__BackgroundHandler__ColorLabel"
+          from={value[modifiers.BACKGROUND_COLOR]}
+          to={value[modifiers.BACKGROUND_COLOR_TO]}
+          type="radial"
         />
       )}>
-        <ColorPicker
-          color="#00D061"
-          onChange={color => onChange(color.hex)}
+        <GradientPicker
+          from={value[modifiers.BACKGROUND_COLOR]}
+          to={value[modifiers.BACKGROUND_COLOR_TO]}
+          onChange={(from, to) => onChange({
+            [modifiers.BACKGROUND_COLOR]: from,
+            [modifiers.BACKGROUND_COLOR_TO]: to,
+          })}
         />
       </TabsItem>
     </Tabs>
@@ -62,11 +80,17 @@ const BackgroundHandler = ({ value, onChange }) => (
 )
 
 BackgroundHandler.propTypes = {
-  value: PropTypes.string,
+  value: PropTypes.shape({
+    [modifiers.BACKGROUND_COLOR]: PropTypes.string,
+    [modifiers.BACKGROUND_COLOR_TO]: PropTypes.string,
+  }),
 }
 
 BackgroundHandler.defaultProps = {
-  value: '#000',
+  value: {
+    [modifiers.BACKGROUND_COLOR]: '#000',
+    [modifiers.BACKGROUND_COLOR_TO]: '#fff',
+  },
 }
 
 export default BackgroundHandler

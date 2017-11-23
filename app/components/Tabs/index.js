@@ -7,6 +7,12 @@ import './styles.sass'
 
 import TabsItem from './TabsItem'
 
+const mapNodeToTabs = tabs => React.Children.map(tabs, child => ({
+  title: child.props.title,
+  path: child.props.path,
+  headerClassName: child.props.headerClassName,
+}))
+
 class Tabs extends React.PureComponent {
   constructor(props) {
     super(props)
@@ -20,11 +26,7 @@ class Tabs extends React.PureComponent {
   }
 
   componentWillMount() {
-    const tabs = React.Children.map(this.props.children, child => ({
-      title: child.props.title,
-      path: child.props.path,
-      headerClassName: child.props.headerClassName,
-    }))
+    const tabs = mapNodeToTabs(this.props.children)
 
     let newState = { tabs }
 
@@ -42,6 +44,12 @@ class Tabs extends React.PureComponent {
     }
 
     this.setState(newState)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      tabs: mapNodeToTabs(nextProps.children),
+    })
   }
 
   handleTabClick(selectedIndex) {
