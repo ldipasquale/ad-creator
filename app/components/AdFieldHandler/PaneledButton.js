@@ -6,6 +6,7 @@ import AdFieldHandlerButton from 'components/AdFieldHandler/Button'
 import AdFieldHandlerPanel from 'components/AdFieldHandler/Panel'
 
 const minPanelWidth = 170
+const maxPanelWidth = 200
 
 class AdFieldHandlerPaneledButton extends React.Component {
   constructor(props) {
@@ -45,6 +46,15 @@ class AdFieldHandlerPaneledButton extends React.Component {
 
     if (wrapperHandlerElementProperties.width < minPanelWidth) {
       const negativeXPosition = (minPanelWidth - wrapperHandlerElementProperties.width) / 2 * -1
+
+      this.setState({
+        panelStyle: {
+          left: negativeXPosition,
+          right: negativeXPosition,
+        },
+      })
+    } else if (wrapperHandlerElementProperties.width > maxPanelWidth) {
+      const negativeXPosition = (maxPanelWidth - wrapperHandlerElementProperties.width) / 2 * -1
 
       this.setState({
         panelStyle: {

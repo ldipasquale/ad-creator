@@ -8,7 +8,7 @@ import ContainerSettingsHandler from '../handlers/ContainerSettingsHandler'
 
 const Wrapper = ({ children }) => children
 
-const TextHandler = ({ onChangeModifiers, modifiers }) => (
+const ContainerHandler = ({ onChangeModifiers, modifiers }) => (
   <Wrapper>
     <ContainerSettingsHandler
       onChange={onChangeModifiers}
@@ -17,12 +17,9 @@ const TextHandler = ({ onChangeModifiers, modifiers }) => (
   </Wrapper>
 )
 
-TextHandler.propTypes = {
-  selectedClassName: PropTypes.string,
+ContainerHandler.propTypes = {
+  onChangeModifiers: PropTypes.func.isRequired,
+  modifiers: PropTypes.object.isRequired,
 }
 
-TextHandler.defaultProps = {
-  selectedClassName: 'jampp__AdFieldHandler__Button--selected',
-}
-
-export default TextHandler
+export default ContainerHandler

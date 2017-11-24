@@ -4,14 +4,29 @@ import cx from 'classnames'
 
 import modifiersValues from 'constants/modifiers'
 
+import ContainerSettingsHandler from '../handlers/ContainerSettingsHandler'
 import FontStyleHandler from '../handlers/FontStyleHandler'
 import FontAlignHandler from '../handlers/FontAlignHandler'
 import FontSettingsHandler from '../handlers/FontSettingsHandler'
 
 const Wrapper = ({ children }) => children
 
-const TextHandler = ({ onChangeModifiers, modifiers }) => (
+const ContainerTextHandler = ({ onChangeModifiers, modifiers }) => (
   <Wrapper>
+    <ContainerSettingsHandler
+      onChange={onChangeModifiers}
+      value={modifiers}
+    />
+
+    <FontStyleHandler
+      onChange={onChangeModifiers}
+      value={{
+        [modifiersValues.IS_FONT_BOLD]: modifiers[modifiersValues.IS_FONT_BOLD],
+        [modifiersValues.IS_FONT_ITALIC]: modifiers[modifiersValues.IS_FONT_ITALIC],
+        [modifiersValues.IS_FONT_UNDERLINE]: modifiers[modifiersValues.IS_FONT_UNDERLINE],
+      }}
+    />
+
     <FontSettingsHandler
       onChange={onChangeModifiers}
       value={{
@@ -22,12 +37,9 @@ const TextHandler = ({ onChangeModifiers, modifiers }) => (
   </Wrapper>
 )
 
-TextHandler.propTypes = {
-  selectedClassName: PropTypes.string,
+ContainerTextHandler.propTypes = {
+  onChangeModifiers: PropTypes.func.isRequired,
+  modifiers: PropTypes.object.isRequired,
 }
 
-TextHandler.defaultProps = {
-  selectedClassName: 'jampp__AdFieldHandler__Button--selected',
-}
-
-export default TextHandler
+export default ContainerTextHandler

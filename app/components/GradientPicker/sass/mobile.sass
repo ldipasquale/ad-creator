@@ -1,1 +1,35 @@
 &
+  &__Chooser
+    margin-bottom: $spacingStandard
+    padding-bottom: $spacingStandard
+    border-bottom: 1px solid $colorLighterGray
+
+    &__Background
+      height: $spacingStandard + 2px
+      width: 100%
+      position: relative
+      border-radius: $spacingStandard
+
+    &__Track
+      cursor: pointer
+      position: absolute
+      top: 1px
+      bottom: 1px
+      display: inline-block
+      width: $spacingStandard
+      height: $spacingStandard
+      border-radius: $spacingStandard
+      background: rgba(#fff, 0.5)
+      border: 1px solid #fff
+      box-shadow: 0 1px 3px 0 rgba(#000, 0.5), inset 0 1px 2px 0 rgba(#000, 0.45)
+      transition: all .15s
+
+      &:not(&--active)
+        opacity: .4
+
+      &--first
+        left: 1px
+
+      &--last
+        right: 1px
+

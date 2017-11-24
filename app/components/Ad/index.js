@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
 
-import AdFieldHandler from 'components/AdFieldHandler'
-
 import Theme from 'services/Theme'
 
 import { mapModifiersToStyle } from 'util/modifiers'
@@ -19,7 +17,6 @@ class Ad extends React.Component {
     this.state = {}
 
     this.handleElementClick = this.handleElementClick.bind(this)
-    this.handleModifierChange = this.handleModifierChange.bind(this)
 
     Theme.get().then(theme => this.availableFields = theme.fields)
   }
@@ -40,18 +37,25 @@ class Ad extends React.Component {
     }
 
     if (selectedField === null || (this.props.selectedElement && this.props.selectedElement.id === selectedField.id)) {
-      this.setState({ isEditingElement: false })
       return this.props.onCancelSelection()
     }
 
-    this.setState({ isEditingElement: true })
-    return this.props.onSelectElement(selectedField)
-  }
+    const selectedElementProperties = selectedElement.getBoundingClientRect()
 
-  handleModifierChange(elementId, modifiers) {
-    this.props.onChangeModifiers({
-      ...this.props.modifiers,
-      [elementId]: modifiers,
+    return this.props.onSelectElement({
+      ...selectedField,
+      style: {
+        width: Math.floor(selectedElementProperties.width),
+        height: Math.ceil(selectedElementProperties.height),
+      },
+      handlerPosition: {
+        top: Math.ceil(selectedElementProperties.top),
+        left: Math.floor(selectedElementProperties.left),
+      },
+      adElementStyle: {
+        top: Math.floor(this.adElementProperties.top),
+        height: Math.floor(this.adElementProperties.height),
+      },
     })
   }
 
@@ -90,6 +94,10 @@ class Ad extends React.Component {
               },
             },
           },
+        })
+      } else {
+        this.setState({
+          highlightedElement: null,
         })
       }
     } else {
@@ -134,19 +142,6 @@ class Ad extends React.Component {
 
         {this.state.highlightedElement && this.props.modifiers[this.state.highlightedElement.id] && (
           <div className="jampp__Ad__Selection">
-            {this.state.isEditingElement && (
-              <AdFieldHandler
-                onChange={modifiers => this.handleModifierChange(this.state.highlightedElement.id, modifiers)}
-                type={this.state.highlightedElement.type}
-                modifiers={this.props.modifiers[this.state.highlightedElement.id]}
-                style={{
-                  left: this.state.highlightedElement.style.left - 30,
-                  top: this.state.highlightedElement.style.top + this.state.highlightedElement.style.height,
-                  width: this.state.highlightedElement.style.width + 60,
-                }}
-              />
-            )}
-
             <div
               className={cx({
                 jampp__Ad__Selection__Overlay: true,

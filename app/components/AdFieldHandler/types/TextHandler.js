@@ -37,11 +37,8 @@ const TextHandler = ({ onChangeModifiers, modifiers }) => (
 )
 
 TextHandler.propTypes = {
-  selectedClassName: PropTypes.string,
-}
-
-TextHandler.defaultProps = {
-  selectedClassName: 'jampp__AdFieldHandler__Button--selected',
+  onChangeModifiers: PropTypes.func.isRequired,
+  modifiers: PropTypes.object.isRequired,
 }
 
 export default TextHandler

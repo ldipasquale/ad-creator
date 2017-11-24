@@ -1,13 +1,14 @@
 import modifiers from 'constants/modifiers'
+import backgroundGradients from 'constants/modifiers/backgroundGradients'
 
 function mapModifiersToStyle(modifiersValues) {
   const style = {}
   const borderStyle = {}
   const shadowStyle = {}
+  const gradientStyle = {}
 
   Object.entries(modifiersValues).forEach(([modifierId, modifierValue]) => {
-    let styleId,
-      styleValue
+    let styleId, styleValue
 
     switch (modifierId) {
       case modifiers.BORDER_COLOR:
@@ -42,6 +43,12 @@ function mapModifiersToStyle(modifiersValues) {
         styleId = 'background'
         break;
 
+      case modifiers.BACKGROUND_GRADIENT_TYPE:
+        gradientStyle.type = modifierValue
+        gradientStyle.from = modifiersValues[modifiers.BACKGROUND_COLOR]
+        gradientStyle.to = modifiersValues[modifiers.BACKGROUND_COLOR_TO] || '#fff'
+        break;
+
       case modifiers.IS_FONT_BOLD:
         styleId = 'fontWeight'
         styleValue = modifierValue ? 600 : 400
@@ -73,6 +80,10 @@ function mapModifiersToStyle(modifiersValues) {
 
   if (shadowStyle.size > 0 && shadowStyle.color !== undefined) {
     style.boxShadow = `0 ${shadowStyle.size}px 0 ${shadowStyle.color}`
+  }
+
+  if (gradientStyle.type) {
+    style.background = backgroundGradients[gradientStyle.type](gradientStyle.from, gradientStyle.to)
   }
 
   return style

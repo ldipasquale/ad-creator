@@ -18,6 +18,7 @@ const ContainerSettingsHandler = ({ value, onChange }) => (
       value={{
         [modifiers.BACKGROUND_COLOR]: value[modifiers.BACKGROUND_COLOR],
         [modifiers.BACKGROUND_COLOR_TO]: value[modifiers.BACKGROUND_COLOR_TO],
+        [modifiers.BACKGROUND_GRADIENT_TYPE]: value[modifiers.BACKGROUND_GRADIENT_TYPE],
       }}
       onChange={onChange}
     />

@@ -12,6 +12,7 @@ export default {
   SHADOW_COLOR: 'shadowColor',
   SHADOW_DIRECTION: 'shadowDirection',
   SHADOW_SIZE: 'shadowSize',
+  BACKGROUND_GRADIENT_TYPE: 'backgroundGradientType',
   BACKGROUND_COLOR: 'backgroundColor',
   BACKGROUND_COLOR_TO: 'backgroundColorTo',
 }
