@@ -19,9 +19,14 @@ class Palette extends React.Component {
       highlightedElement: null,
     }
 
+    this.handleChangeTag = this.handleChangeTag.bind(this)
     this.handleChangeModifiers = this.handleChangeModifiers.bind(this)
     this.handleSelectElement = this.handleSelectElement.bind(this)
     this.handleCancelSelection = this.handleCancelSelection.bind(this)
+  }
+
+  handleChangeTag(templateId, tag) {
+    this.props.onChangeTag(templateId, tag)
   }
 
   handleChangeModifiers(elementId, modifiers) {
@@ -58,9 +63,7 @@ class Palette extends React.Component {
           />
         )}
 
-        <Carousel
-          onChange={() => this.setState({ highlightedElement: null })}
-        >
+        <Carousel onChange={() => this.setState({ highlightedElement: null })}>
           <div>
             <Device model="nexus5">
               <Ad
@@ -68,6 +71,7 @@ class Palette extends React.Component {
                 height={250}
                 onSelectElement={this.handleSelectElement}
                 onCancelSelection={this.handleCancelSelection}
+                onChangeTag={tag => this.handleChangeTag(1, tag)}
                 selectedElement={this.state.highlightedElement}
                 modifiers={this.props.modifiers}
                 fields={this.props.fields}
@@ -84,6 +88,7 @@ class Palette extends React.Component {
                 height={480}
                 onSelectElement={this.handleSelectElement}
                 onCancelSelection={this.handleCancelSelection}
+                onChangeTag={tag => this.handleChangeTag(2, tag)}
                 selectedElement={this.state.highlightedElement}
                 modifiers={this.props.modifiers}
                 fields={this.props.fields}
@@ -100,6 +105,7 @@ class Palette extends React.Component {
                 height={50}
                 onSelectElement={this.handleSelectElement}
                 onCancelSelection={this.handleCancelSelection}
+                onChangeTag={tag => this.handleChangeTag(3, tag)}
                 selectedElement={this.state.highlightedElement}
                 modifiers={this.props.modifiers}
                 fields={this.props.fields}

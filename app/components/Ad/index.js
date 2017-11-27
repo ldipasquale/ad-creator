@@ -115,6 +115,8 @@ class Ad extends React.Component {
           })
         }
       })
+
+      this.props.onChangeTag(this.adContent.innerHTML)
     }
   }
 
@@ -155,6 +157,7 @@ class Ad extends React.Component {
 }
 
 Ad.propTypes = {
+  onChangeTag: PropTypes.func.isRequired,
   onSelectElement: PropTypes.func.isRequired,
   onCancelSelection: PropTypes.func.isRequired,
   children: PropTypes.string.isRequired,
