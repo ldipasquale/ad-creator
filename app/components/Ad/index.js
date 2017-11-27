@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
 
-import Theme from 'services/Theme'
-
 import { mapModifiersToStyle } from 'util/modifiers'
 
 import 'css-scoper'
@@ -14,26 +12,22 @@ class Ad extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state = {}
+    this.state = {
+      highlightedElement: null,
+    }
 
     this.handleElementClick = this.handleElementClick.bind(this)
-
-    Theme.get().then(theme => this.availableFields = theme.fields)
-  }
-
-  componentDidMount() {
-    this.adElementProperties = this.adElement.getBoundingClientRect()
   }
 
   handleElementClick(event) {
     event.preventDefault()
 
     let selectedElement = event.target
-    let selectedField = this.availableFields.find(field => field.id === selectedElement.dataset.field)
+    let selectedField = this.props.fields.find(field => field.id === selectedElement.dataset.field)
 
     while (selectedElement.parentElement && !selectedField) {
       selectedElement = selectedElement.parentElement
-      selectedField = this.availableFields.find(field => field.id === selectedElement.dataset.field)
+      selectedField = this.props.fields.find(field => field.id === selectedElement.dataset.field)
     }
 
     if (selectedField === null || (this.props.selectedElement && this.props.selectedElement.id === selectedField.id)) {
@@ -41,6 +35,7 @@ class Ad extends React.Component {
     }
 
     const selectedElementProperties = selectedElement.getBoundingClientRect()
+    const adElementProperties = this.adElement.getBoundingClientRect()
 
     return this.props.onSelectElement({
       ...selectedField,
@@ -53,8 +48,8 @@ class Ad extends React.Component {
         left: Math.floor(selectedElementProperties.left),
       },
       adElementStyle: {
-        top: Math.floor(this.adElementProperties.top),
-        height: Math.floor(this.adElementProperties.height),
+        top: Math.floor(adElementProperties.top),
+        height: Math.floor(adElementProperties.height),
       },
     })
   }
@@ -79,6 +74,8 @@ class Ad extends React.Component {
         const selectedElementProperties = selectedElement.getBoundingClientRect()
         const selectedElementBorderRadius = parseInt(getComputedStyle(selectedElement).getPropertyValue('border-radius'))
 
+        const adElementProperties = this.adElement.getBoundingClientRect()
+
         this.setState({
           highlightedElement: {
             id: nextProps.selectedElement.id,
@@ -87,8 +84,8 @@ class Ad extends React.Component {
             style: {
               width: Math.floor(selectedElementProperties.width) + extraMargin,
               height: Math.ceil(selectedElementProperties.height) + extraMargin,
-              top: Math.ceil(selectedElementProperties.top) - Math.floor(this.adElementProperties.top) - Math.ceil(extraMargin / 2),
-              left: Math.floor(selectedElementProperties.left) - Math.floor(this.adElementProperties.left) - Math.ceil(extraMargin / 2),
+              top: Math.ceil(selectedElementProperties.top) - Math.floor(adElementProperties.top) - Math.ceil(extraMargin / 2),
+              left: Math.floor(selectedElementProperties.left) - Math.floor(adElementProperties.left) - Math.ceil(extraMargin / 2),
               ...selectedElementBorderRadius && {
                 borderRadius: `${selectedElementBorderRadius + extraBorderRadius}px`,
               },

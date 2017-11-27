@@ -5,10 +5,10 @@ import 'stylesheets/vendor/sanitize.css'
 import 'stylesheets/vendor/reset.css'
 import 'stylesheets/global.sass'
 
-import Examples from 'pages/Examples'
+import Editor from 'pages/Editor'
 
 ReactDOM.render(
-  <Examples />,
+  <Editor />,
   document.getElementById('jampp-app'),
 )
 

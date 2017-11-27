@@ -1,8 +1,8 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import Theme from './'
+import Palette from './'
 
-storiesOf('Theme', module)
+storiesOf('Palette', module)
   .add('Default', () => (
-    <Theme />
+    <Palette />
   ))

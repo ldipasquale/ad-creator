@@ -1,0 +1,10 @@
+&
+  .slick-slide:not(.slick-center)
+    .jampp__Device
+      pointer-events: none
+      opacity: 0.4
+      transform: scale3d($deviceScaleRatio, $deviceScaleRatio, $deviceScaleRatio)
+      transform-origin: 50% 50%
+
+      .jampp__Ad__Selection
+        transform: scale3d(1 / $deviceScaleRatio / $deviceScaleRatio, 1 / $deviceScaleRatio / $deviceScaleRatio, 1 / $deviceScaleRatio / $deviceScaleRatio)
