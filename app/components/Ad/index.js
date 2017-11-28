@@ -4,7 +4,7 @@ import cx from 'classnames'
 
 import { mapModifiersToStyle } from 'util/modifiers'
 
-import 'css-scoper'
+import 'util/cssScoper'
 import './styles.sass'
 
 class Ad extends React.Component {
@@ -13,13 +13,11 @@ class Ad extends React.Component {
 
     this.state = {
       highlightedElement: null,
+      originalTag: props.children,
+      tag: props.children,
     }
 
     this.handleElementClick = this.handleElementClick.bind(this)
-  }
-
-  componentWillMount() {
-    this.originalTag = this.props.children
   }
 
   componentDidMount() {
@@ -45,6 +43,26 @@ class Ad extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    const newPlaceholders = Object.entries(nextProps.placeholders)
+
+    /* TO-DO
+    if (newPlaceholders.length > 0) {
+      let tag = this.state.originalTag
+
+      newPlaceholders.forEach(([placeholder, placeholderValue]) => {
+        tag = tag.replace(`{{${placeholder}}}`, placeholderValue)
+      })
+
+      this.setState({ tag })
+    } else {
+      const oldPlaceholders = Object.entries(nextProps.placeholders)
+
+      if (oldPlaceholders.length > 0 && newPlaceholders.length === 0) {
+        this.setState({ tag: this.state.originalTag })
+      }
+    }
+    */
+
     if (nextProps.selectedElement) {
       let selectedElement = this.adElement.querySelector(`[data-field=${nextProps.selectedElement.id}`)
 
@@ -106,44 +124,48 @@ class Ad extends React.Component {
         }
       })
 
-      this.props.onChangeTag(`${this.styleTag}${this.adContent.innerHTML}`)
+      if (this.props.onChangeTag !== null) {
+        this.props.onChangeTag(`${this.styleTag}${this.adContent.innerHTML}`)
+      }
     }
   }
 
   handleElementClick(event) {
     event.preventDefault()
 
-    let selectedElement = event.target
-    let selectedField = this.props.fields.find(field => field.id === selectedElement.dataset.field)
+    if (this.props.onSelectElement !== null && this.props.onCancelSelection !== null) {
+      let selectedElement = event.target
+      let selectedField = this.props.fields.find(field => field.id === selectedElement.dataset.field)
 
-    while (selectedElement.parentElement && !selectedField) {
-      selectedElement = selectedElement.parentElement
-      // eslint-disable-next-line no-loop-func
-      selectedField = this.props.fields.find(field => field.id === selectedElement.dataset.field)
+      while (selectedElement.parentElement && !selectedField) {
+        selectedElement = selectedElement.parentElement
+        // eslint-disable-next-line no-loop-func
+        selectedField = this.props.fields.find(field => field.id === selectedElement.dataset.field)
+      }
+
+      if (selectedField === null || (this.props.selectedElement && this.props.selectedElement.id === selectedField.id)) {
+        return this.props.onCancelSelection()
+      }
+
+      const selectedElementProperties = selectedElement.getBoundingClientRect()
+      const adElementProperties = this.adElement.getBoundingClientRect()
+
+      return this.props.onSelectElement({
+        ...selectedField,
+        style: {
+          width: Math.floor(selectedElementProperties.width),
+          height: Math.ceil(selectedElementProperties.height),
+        },
+        handlerPosition: {
+          top: Math.ceil(selectedElementProperties.top),
+          left: Math.floor(selectedElementProperties.left),
+        },
+        adElementStyle: {
+          top: Math.floor(adElementProperties.top),
+          height: Math.floor(adElementProperties.height),
+        },
+      })
     }
-
-    if (selectedField === null || (this.props.selectedElement && this.props.selectedElement.id === selectedField.id)) {
-      return this.props.onCancelSelection()
-    }
-
-    const selectedElementProperties = selectedElement.getBoundingClientRect()
-    const adElementProperties = this.adElement.getBoundingClientRect()
-
-    return this.props.onSelectElement({
-      ...selectedField,
-      style: {
-        width: Math.floor(selectedElementProperties.width),
-        height: Math.ceil(selectedElementProperties.height),
-      },
-      handlerPosition: {
-        top: Math.ceil(selectedElementProperties.top),
-        left: Math.floor(selectedElementProperties.left),
-      },
-      adElementStyle: {
-        top: Math.floor(adElementProperties.top),
-        height: Math.floor(adElementProperties.height),
-      },
-    })
   }
 
   render() {
@@ -159,7 +181,7 @@ class Ad extends React.Component {
             height: `${this.props.height}px`,
           }}
           dangerouslySetInnerHTML={{
-            __html: this.originalTag,
+            __html: this.state.tag,
           }}
           onClick={this.handleElementClick}
           ref={(element) => { this.adContent = element }}
@@ -183,21 +205,24 @@ class Ad extends React.Component {
 }
 
 Ad.propTypes = {
-  onChangeTag: PropTypes.func.isRequired,
-  onSelectElement: PropTypes.func.isRequired,
-  onCancelSelection: PropTypes.func.isRequired,
+  onChangeTag: PropTypes.func,
+  onSelectElement: PropTypes.func,
+  onCancelSelection: PropTypes.func,
+  selectedElement: PropTypes.shape({
+    id: PropTypes.string,
+    type: PropTypes.string,
+  }),
   children: PropTypes.string.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   modifiers: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   fields: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
-  selectedElement: PropTypes.shape({
-    id: PropTypes.string,
-    type: PropTypes.string,
-  }),
 }
 
 Ad.defaultProps = {
+  onChangeTag: null,
+  onSelectElement: null,
+  onCancelSelection: null,
   selectedElement: {},
 }
 

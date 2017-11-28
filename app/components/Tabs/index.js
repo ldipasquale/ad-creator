@@ -87,16 +87,7 @@ class Tabs extends React.PureComponent {
           })}
           style={this.props.bodyStyle}
         >
-          {this.props.children.map((tabItem, i) => (
-            <div
-              key={i}
-              style={{
-                display: i === this.state.activeTabIndex ? 'block' : 'none',
-              }}
-            >
-              {tabItem}
-            </div>
-          ))}
+          {this.props.children[this.state.activeTabIndex]}
         </div>
       </div>
     )
