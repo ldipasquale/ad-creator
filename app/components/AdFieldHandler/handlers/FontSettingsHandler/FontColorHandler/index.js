@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import cx from 'classnames'
 
 import AdFieldHandlerPaneledButton from 'components/AdFieldHandler/PaneledButton'
 import ColorLabel from 'components/ColorLabel'
@@ -21,6 +20,7 @@ const FontColorHandler = ({ value, onChange }) => (
 
 FontColorHandler.propTypes = {
   value: PropTypes.string,
+  onChange: PropTypes.func.isRequired,
 }
 
 FontColorHandler.defaultProps = {

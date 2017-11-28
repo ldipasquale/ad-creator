@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import cx from 'classnames'
 
 import InputRange from 'react-input-range'
 
@@ -29,9 +28,8 @@ const CustomInputRange = ({ value, onChange }) => (
 )
 
 CustomInputRange.propTypes = {
-}
-
-CustomInputRange.defaultProps = {
+  value: PropTypes.number.isRequired,
+  onChange: PropTypes.func.isRequired,
 }
 
 export default CustomInputRange

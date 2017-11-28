@@ -1,12 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import cx from 'classnames'
 
 import modifiersValues from 'constants/modifiers'
 
 import ContainerSettingsHandler from '../handlers/ContainerSettingsHandler'
 import FontStyleHandler from '../handlers/FontStyleHandler'
-import FontAlignHandler from '../handlers/FontAlignHandler'
 import FontSettingsHandler from '../handlers/FontSettingsHandler'
 
 const Wrapper = ({ children }) => children
@@ -39,7 +37,7 @@ const ContainerTextHandler = ({ onChangeModifiers, modifiers }) => (
 
 ContainerTextHandler.propTypes = {
   onChangeModifiers: PropTypes.func.isRequired,
-  modifiers: PropTypes.object.isRequired,
+  modifiers: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
 }
 
 export default ContainerTextHandler

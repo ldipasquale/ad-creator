@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import cx from 'classnames'
 
 import fontAlignValues from 'constants/modifiers/fontAlign'
 
@@ -31,9 +30,12 @@ const FontAlignHandler = ({ value, onChange }) => (
 )
 
 FontAlignHandler.propTypes = {
-}
-
-FontAlignHandler.defaultProps = {
+  value: PropTypes.oneOf([
+    fontAlignValues.LEFT,
+    fontAlignValues.CENTER,
+    fontAlignValues.RIGHT,
+  ]).isRequired,
+  onChange: PropTypes.func.isRequired,
 }
 
 export default FontAlignHandler

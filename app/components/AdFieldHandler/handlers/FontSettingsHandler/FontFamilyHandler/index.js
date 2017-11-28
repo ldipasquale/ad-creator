@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import cx from 'classnames'
 
 import Scroller from 'components/Scroller'
 import AdFieldHandlerPaneledButton from 'components/AdFieldHandler/PaneledButton'
@@ -32,6 +31,7 @@ const FontFamilyHandler = ({ value, onChange }) => (
 
 FontFamilyHandler.propTypes = {
   value: PropTypes.string,
+  onChange: PropTypes.func.isRequired,
 }
 
 FontFamilyHandler.defaultProps = {

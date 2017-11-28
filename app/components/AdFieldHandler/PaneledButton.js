@@ -21,6 +21,28 @@ class AdFieldHandlerPaneledButton extends React.Component {
     this.handleOutsideClick = this.handleOutsideClick.bind(this)
   }
 
+  componentDidMount() {
+    const wrapperHandlerElementProperties = this.wrapperElement.parentElement.parentElement.getBoundingClientRect()
+
+    let negativeXPosition = -1
+
+    if (wrapperHandlerElementProperties.width < minPanelWidth) {
+      negativeXPosition = ((minPanelWidth - wrapperHandlerElementProperties.width) / 2) * -1
+    } else if (wrapperHandlerElementProperties.width > maxPanelWidth) {
+      negativeXPosition = ((maxPanelWidth - wrapperHandlerElementProperties.width) / 2) * -1
+    }
+
+    if (negativeXPosition !== -1) {
+      // eslint-disable-next-line react/no-did-mount-set-state
+      this.setState({
+        panelStyle: {
+          left: negativeXPosition,
+          right: negativeXPosition,
+        },
+      })
+    }
+  }
+
   handleButtonClick() {
     if (this.state.isPanelOpened) {
       document.removeEventListener('click', this.handleOutsideClick, false);
@@ -41,35 +63,11 @@ class AdFieldHandlerPaneledButton extends React.Component {
     this.handleButtonClick()
   }
 
-  componentDidMount() {
-    const wrapperHandlerElementProperties = this.wrapperElement.parentElement.parentElement.getBoundingClientRect()
-
-    if (wrapperHandlerElementProperties.width < minPanelWidth) {
-      const negativeXPosition = (minPanelWidth - wrapperHandlerElementProperties.width) / 2 * -1
-
-      this.setState({
-        panelStyle: {
-          left: negativeXPosition,
-          right: negativeXPosition,
-        },
-      })
-    } else if (wrapperHandlerElementProperties.width > maxPanelWidth) {
-      const negativeXPosition = (maxPanelWidth - wrapperHandlerElementProperties.width) / 2 * -1
-
-      this.setState({
-        panelStyle: {
-          left: negativeXPosition,
-          right: negativeXPosition,
-        },
-      })
-    }
-  }
-
   render() {
     return (
       <span
         className="jampp__AdFieldHandler__PaneledButton"
-        ref={element => this.wrapperElement = element}
+        ref={(element) => { this.wrapperElement = element }}
       >
         <AdFieldHandlerButton
           {...this.props.buttonProps}
@@ -83,7 +81,7 @@ class AdFieldHandlerPaneledButton extends React.Component {
 
         <AdFieldHandlerPanel
           isOpen={this.state.isPanelOpened}
-          onRef={element => this.panelElement = element}
+          onRef={(element) => { this.panelElement = element }}
           {...this.props.className && {
             className: this.props.className,
           }}
@@ -99,9 +97,14 @@ class AdFieldHandlerPaneledButton extends React.Component {
 }
 
 AdFieldHandlerPaneledButton.propTypes = {
+  buttonProps: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  className: PropTypes.string,
+  children: PropTypes.node.isRequired,
 }
 
 AdFieldHandlerPaneledButton.defaultProps = {
+  buttonProps: {},
+  className: null,
 }
 
 export default AdFieldHandlerPaneledButton

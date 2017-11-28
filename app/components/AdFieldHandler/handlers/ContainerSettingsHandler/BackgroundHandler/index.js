@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import cx from 'classnames'
 
 import AdFieldHandlerPaneledButton from 'components/AdFieldHandler/PaneledButton'
 import ColorLabel from 'components/ColorLabel'
@@ -108,6 +107,7 @@ BackgroundHandler.propTypes = {
     [modifiers.BACKGROUND_COLOR]: PropTypes.string,
     [modifiers.BACKGROUND_COLOR_TO]: PropTypes.string,
   }),
+  onChange: PropTypes.func.isRequired,
 }
 
 BackgroundHandler.defaultProps = {

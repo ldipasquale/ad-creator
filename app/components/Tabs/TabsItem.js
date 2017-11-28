@@ -6,10 +6,10 @@ const TabsItem = ({ children }) => (
 )
 
 TabsItem.propTypes = {
-  title: PropTypes.oneOfType([
+  title: PropTypes.oneOfType([ // eslint-disable-line react/no-unused-prop-types
     PropTypes.string,
     PropTypes.node,
-  ]).isRequired, // eslint-disable-line react/no-unused-prop-types
+  ]).isRequired,
   path: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
   icon: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
   headerClassName: PropTypes.string, // eslint-disable-line react/no-unused-prop-types

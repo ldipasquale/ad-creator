@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import stylePropType from 'react-style-proptype'
-import cx from 'classnames'
 
 import elements from 'constants/elements'
 
@@ -45,7 +44,7 @@ const AdFieldHandler = ({
 AdFieldHandler.propTypes = {
   type: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  modifiers: PropTypes.object.isRequired,
+  modifiers: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   style: stylePropType.isRequired,
 }
 

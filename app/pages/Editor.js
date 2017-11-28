@@ -18,14 +18,6 @@ class Editor extends React.Component {
     this.handleSubmitPalette = this.handleSubmitPalette.bind(this)
   }
 
-  handleChangePalette(palette) {
-    this.palette = palette
-  }
-
-  handleSubmitPalette() {
-    console.log(this.palette)
-  }
-
   getEditorFooter() {
     return (
       <div>
@@ -49,6 +41,14 @@ class Editor extends React.Component {
         </div>
       </div>
     )
+  }
+
+  handleChangePalette(palette) {
+    this.palette = palette
+  }
+
+  handleSubmitPalette() {
+    console.log(this.palette)
   }
 
   render() {

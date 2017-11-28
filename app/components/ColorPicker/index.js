@@ -43,4 +43,17 @@ const ColorPicker = ({
   </div>
 )
 
+ColorPicker.propTypes = {
+  hex: PropTypes.string,
+  hsl: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  hsv: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  onChange: PropTypes.func.isRequired,
+}
+
+ColorPicker.defaultProps = {
+  hex: null,
+  hsl: {},
+  hsv: {},
+}
+
 export default ColorWrap(ColorPicker)

@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import cx from 'classnames'
 
 import modifiers from 'constants/modifiers'
 
@@ -22,7 +21,7 @@ const BorderHandler = ({ value, onChange }) => (
   >
     <InputRange
       value={value[modifiers.BORDER_SIZE]}
-      onChange={value => onChange({ [modifiers.BORDER_SIZE]: value })}
+      onChange={size => onChange({ [modifiers.BORDER_SIZE]: size })}
     />
 
     <ColorPicker

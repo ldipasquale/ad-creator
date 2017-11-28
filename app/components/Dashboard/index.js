@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import cx from 'classnames'
 
 import Footer from './Footer'
 
@@ -21,9 +20,8 @@ const Dashboard = ({ children, footerContent }) => (
 )
 
 Dashboard.propTypes = {
-}
-
-Dashboard.defaultProps = {
+  children: PropTypes.node.isRequired,
+  footerContent: PropTypes.node.isRequired,
 }
 
 export default Dashboard

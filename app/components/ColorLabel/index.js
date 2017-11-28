@@ -11,7 +11,7 @@ const mapTypeToBackground = (type, from, to) => backgroundGradients[type](from, 
 const ColorLabel = ({
   onClick, className, value, valueTo, gradientType,
 }) => (
-  <span
+  <div
     className={cx({
       jampp__ColorLabel: true,
       [className]: className !== null,
@@ -27,7 +27,6 @@ ColorLabel.propTypes = {
   className: PropTypes.string,
   value: PropTypes.string,
   valueTo: PropTypes.string,
-  to: PropTypes.string,
   gradientType: PropTypes.string,
   onClick: PropTypes.func,
 }

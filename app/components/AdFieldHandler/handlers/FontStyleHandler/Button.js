@@ -27,6 +27,7 @@ const FontStyleHandler = ({ type, selected, onChange }) => (
 FontStyleHandler.propTypes = {
   type: PropTypes.string.isRequired,
   selected: PropTypes.bool,
+  onChange: PropTypes.func.isRequired,
 }
 
 FontStyleHandler.defaultProps = {

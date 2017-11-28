@@ -1,7 +1,7 @@
 import modifiers from 'constants/modifiers'
 import fontAlignValues from 'constants/modifiers/fontAlign'
 
-function get(id) {
+function get() {
   return Promise.resolve({
     modifiers: {
       container: {

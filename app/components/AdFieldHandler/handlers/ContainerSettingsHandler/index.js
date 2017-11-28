@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import cx from 'classnames'
 
 import modifiers from 'constants/modifiers'
 
@@ -42,9 +41,16 @@ const ContainerSettingsHandler = ({ value, onChange }) => (
 )
 
 ContainerSettingsHandler.propTypes = {
-}
-
-ContainerSettingsHandler.defaultProps = {
+  value: PropTypes.shape({
+    [modifiers.BACKGROUND_COLOR]: PropTypes.string,
+    [modifiers.BACKGROUND_COLOR_TO]: PropTypes.string,
+    [modifiers.BACKGROUND_GRADIENT_TYPE]: PropTypes.string,
+    [modifiers.BORDER_COLOR]: PropTypes.string,
+    [modifiers.BORDER_SIZE]: PropTypes.number,
+    [modifiers.SHADOW_COLOR]: PropTypes.string,
+    [modifiers.SHADOW_SIZE]: PropTypes.number,
+  }).isRequired,
+  onChange: PropTypes.func.isRequired,
 }
 
 export default ContainerSettingsHandler

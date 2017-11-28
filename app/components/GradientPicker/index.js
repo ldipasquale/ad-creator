@@ -42,7 +42,7 @@ class GradientPicker extends React.Component {
               background: `linear-gradient(90deg, ${this.props.from}, ${this.props.to})`,
             }}
           >
-            <span
+            <div
               className={cx({
                 jampp__GradientPicker__Chooser__Track: true,
                 'jampp__GradientPicker__Chooser__Track--first': true,
@@ -51,7 +51,7 @@ class GradientPicker extends React.Component {
               onClick={() => this.handleActiveColorChange('from')}
             />
 
-            <span
+            <div
               className={cx({
                 jampp__GradientPicker__Chooser__Track: true,
                 'jampp__GradientPicker__Chooser__Track--last': true,

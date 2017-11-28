@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import cx from 'classnames'
 
 import modifiersValues from 'constants/modifiers'
 
@@ -38,7 +37,7 @@ const TextHandler = ({ onChangeModifiers, modifiers }) => (
 
 TextHandler.propTypes = {
   onChangeModifiers: PropTypes.func.isRequired,
-  modifiers: PropTypes.object.isRequired,
+  modifiers: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
 }
 
 export default TextHandler

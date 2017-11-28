@@ -1,17 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import cx from 'classnames'
-
-import FontStyleHandlerButton from './Button'
 
 import modifiers from 'constants/modifiers'
+
+import FontStyleHandlerButton from './Button'
 
 import './styles.sass'
 
 const FontStyleHandler = ({ value, onChange }) => {
-  const handleChange = (modifier, value) => onChange({
+  const handleChange = (modifier, modifierValue) => onChange({
     ...value,
-    [modifier]: value,
+    [modifier]: modifierValue,
   })
 
   return (
@@ -19,28 +18,31 @@ const FontStyleHandler = ({ value, onChange }) => {
       <FontStyleHandlerButton
         type="bold"
         selected={value[modifiers.IS_FONT_BOLD]}
-        onChange={value => handleChange(modifiers.IS_FONT_BOLD, value)}
+        onChange={isFontBold => handleChange(modifiers.IS_FONT_BOLD, isFontBold)}
       />
 
       <FontStyleHandlerButton
         type="italic"
         selected={value[modifiers.IS_FONT_ITALIC]}
-        onChange={value => handleChange(modifiers.IS_FONT_ITALIC, value)}
+        onChange={isFontItalic => handleChange(modifiers.IS_FONT_ITALIC, isFontItalic)}
       />
 
       <FontStyleHandlerButton
         type="underline"
         selected={value[modifiers.IS_FONT_UNDERLINE]}
-        onChange={value => handleChange(modifiers.IS_FONT_UNDERLINE, value)}
+        onChange={isFontUnderline => handleChange(modifiers.IS_FONT_UNDERLINE, isFontUnderline)}
       />
     </div>
   )
 }
 
 FontStyleHandler.propTypes = {
-}
-
-FontStyleHandler.defaultProps = {
+  value: PropTypes.shape({
+    [modifiers.IS_FONT_BOLD]: PropTypes.bool,
+    [modifiers.IS_FONT_ITALIC]: PropTypes.bool,
+    [modifiers.IS_FONT_UNDERLINE]: PropTypes.bool,
+  }).isRequired,
+  onChange: PropTypes.func.isRequired,
 }
 
 export default FontStyleHandler

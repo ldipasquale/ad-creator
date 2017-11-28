@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import Palette from 'components/Palette'
 
@@ -10,8 +11,9 @@ class PaletteContainer extends React.Component {
     super(props)
 
     this.state = {
+      templates: [],
       fields: [],
-      modifiers: [],
+      modifiers: {},
     }
 
     this.templates = []
@@ -28,6 +30,7 @@ class PaletteContainer extends React.Component {
         PaletteService.get(),
       ])
       .then(([theme, palette]) => this.setState({
+        templates: theme.templates,
         fields: theme.fields,
         modifiers: palette.modifiers,
       }, this.handleChange))
@@ -62,6 +65,7 @@ class PaletteContainer extends React.Component {
   render() {
     return (
       <Palette
+        templates={this.state.templates}
         fields={this.state.fields}
         modifiers={this.state.modifiers}
         onChangeModifiers={this.handleChangeModifiers}
@@ -69,6 +73,10 @@ class PaletteContainer extends React.Component {
       />
     )
   }
+}
+
+PaletteContainer.propTypes = {
+  onChange: PropTypes.func.isRequired,
 }
 
 export default PaletteContainer

@@ -8,62 +8,65 @@ function mapModifiersToStyle(modifiersValues) {
   const gradientStyle = {}
 
   Object.entries(modifiersValues).forEach(([modifierId, modifierValue]) => {
-    let styleId,
-      styleValue
+    let styleId
+    let styleValue
 
     switch (modifierId) {
       case modifiers.BORDER_COLOR:
         borderStyle.color = modifierValue
-        break;
+        break
 
       case modifiers.BORDER_SIZE:
         borderStyle.size = parseInt(modifierValue, 10)
-        break;
+        break
 
       case modifiers.SHADOW_COLOR:
         shadowStyle.color = modifierValue
-        break;
+        break
 
       case modifiers.SHADOW_SIZE:
         shadowStyle.size = modifierValue
-        break;
+        break
 
       case modifiers.FONT_COLOR:
         styleId = 'color'
-        break;
+        break
 
       case modifiers.FONT_FAMILY:
         styleId = 'fontFamily'
-        break;
+        break
 
       case modifiers.FONT_ALIGN:
         styleId = 'textAlign'
-        break;
+        break
 
       case modifiers.BACKGROUND_COLOR:
         styleId = 'background'
-        break;
+        break
 
       case modifiers.BACKGROUND_GRADIENT_TYPE:
         gradientStyle.type = modifierValue
         gradientStyle.from = modifiersValues[modifiers.BACKGROUND_COLOR]
         gradientStyle.to = modifiersValues[modifiers.BACKGROUND_COLOR_TO] || '#fff'
-        break;
+        break
 
       case modifiers.IS_FONT_BOLD:
         styleId = 'fontWeight'
         styleValue = modifierValue ? 600 : 400
-        break;
+        break
 
       case modifiers.IS_FONT_ITALIC:
         styleId = 'fontStyle'
         styleValue = modifierValue ? 'italic' : 'normal'
-        break;
+        break
 
       case modifiers.IS_FONT_UNDERLINE:
         styleId = 'textDecoration'
         styleValue = modifierValue ? 'underline' : 'none'
-        break;
+        break
+
+      default:
+        break
     }
 
     if (styleId) {

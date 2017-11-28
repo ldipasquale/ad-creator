@@ -36,7 +36,7 @@ AdFieldHandlerPanel.propTypes = {
 AdFieldHandlerPanel.defaultProps = {
   className: null,
   onRef: null,
-  stylePropType: {},
+  style: {},
 }
 
 export default AdFieldHandlerPanel

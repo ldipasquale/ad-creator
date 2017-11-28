@@ -67,7 +67,7 @@ class Tabs extends React.PureComponent {
       <div>
         <div className={this.props.classNames.header}>
           {this.state.tabs.map((tab, i) => (
-            <span
+            <div
               key={i} // eslint-disable-line react/no-array-index-key
               onClick={() => this.handleTabClick(i)}
               className={classNames({
@@ -77,7 +77,7 @@ class Tabs extends React.PureComponent {
               })}
             >
               {tab.title}
-            </span>
+            </div>
           ))}
         </div>
 
@@ -104,7 +104,6 @@ class Tabs extends React.PureComponent {
 }
 
 Tabs.propTypes = {
-  contentWrapper: PropTypes.func,
   onChange: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.string,
@@ -121,7 +120,6 @@ Tabs.propTypes = {
 }
 
 Tabs.defaultProps = {
-  contentWrapper: children => children,
   onChange: null,
   bodyStyle: {},
   selectedTabPath: null,

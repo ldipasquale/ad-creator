@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import cx from 'classnames'
 
 import modifiers from 'constants/modifiers'
 
@@ -26,9 +25,11 @@ const FontSettingsHandler = ({ value, onChange }) => (
 )
 
 FontSettingsHandler.propTypes = {
-}
-
-FontSettingsHandler.defaultProps = {
+  value: PropTypes.shape({
+    [modifiers.FONT_COLOR]: PropTypes.string,
+    [modifiers.FONT_FAMILY]: PropTypes.string,
+  }).isRequired,
+  onChange: PropTypes.func.isRequired,
 }
 
 export default FontSettingsHandler

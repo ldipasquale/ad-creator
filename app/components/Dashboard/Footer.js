@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import cx from 'classnames'
 
 import './styles.sass'
 
@@ -11,9 +10,7 @@ const Footer = ({ children }) => (
 )
 
 Footer.propTypes = {
-}
-
-Footer.defaultProps = {
+  children: PropTypes.node.isRequired,
 }
 
 export default Footer

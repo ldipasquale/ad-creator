@@ -40,6 +40,7 @@ const FontAlignHandler = ({ type, selected, onChange }) => (
 FontAlignHandler.propTypes = {
   type: PropTypes.string.isRequired,
   selected: PropTypes.bool,
+  onChange: PropTypes.func.isRequired,
 }
 
 FontAlignHandler.defaultProps = {

@@ -3,12 +3,12 @@ import elements from 'constants/elements'
 const horizontalMargin = 200
 const minHandlerHeight = 23
 
-function getHandlerPosition(element, adHeight) {
+function getHandlerPosition(element) {
   if (element.type === elements.CONTAINER) {
     return {
       width: element.style.width + horizontalMargin,
       left: element.handlerPosition.left - (horizontalMargin / 2),
-      top: element.adElementStyle.top + (element.adElementStyle.height - minHandlerHeight) / 2,
+      top: element.adElementStyle.top + ((element.adElementStyle.height - minHandlerHeight) / 2),
     }
   }
 

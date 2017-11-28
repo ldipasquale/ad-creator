@@ -1,8 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import cx from 'classnames'
-
-import modifiersValues from 'constants/modifiers'
 
 import ContainerSettingsHandler from '../handlers/ContainerSettingsHandler'
 
@@ -19,7 +16,7 @@ const ContainerHandler = ({ onChangeModifiers, modifiers }) => (
 
 ContainerHandler.propTypes = {
   onChangeModifiers: PropTypes.func.isRequired,
-  modifiers: PropTypes.object.isRequired,
+  modifiers: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
 }
 
 export default ContainerHandler
