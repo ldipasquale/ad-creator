@@ -16,42 +16,47 @@ class PaletteContainer extends React.Component {
 
     this.templates = []
 
+    this.handleChange = this.handleChange.bind(this)
     this.handleChangeModifiers = this.handleChangeModifiers.bind(this)
     this.handleChangeTag = this.handleChangeTag.bind(this)
   }
 
   componentDidMount() {
-    ThemeService.get().then(theme => this.setState({
-      fields: theme.fields,
-    }))
-
-    PaletteService.get().then(palette => {
-      this.props.onChange(palette.modifiers)
-
-      this.setState({
+    Promise
+      .all([
+        ThemeService.get(),
+        PaletteService.get(),
+      ])
+      .then(([theme, palette]) => this.setState({
+        fields: theme.fields,
         modifiers: palette.modifiers,
-      })
+      }, this.handleChange))
+  }
+
+  handleChange() {
+    this.props.onChange({
+      modifiers: this.state.modifiers,
+      template: this.templates,
     })
   }
 
   handleChangeModifiers(modifiers) {
-    this.setState({ modifiers })
+    this.setState({ modifiers }, this.handleChange)
   }
 
   handleChangeTag(templateId, tag) {
-    const templates = [...this.templates]
-    const templateIndex = templates.findIndex(template => template.id === templateId)
+    const templateIndex = this.templates.findIndex(template => template.id === templateId)
 
-    if (templateIndex === -1) {
-      templates.push({
+    if (templateIndex !== -1) {
+      this.templates[templateIndex].tag = tag
+    } else {
+      this.templates.push({
         id: templateId,
         tag,
       })
-    } else {
-      templates[templateIndex].tag = tag
     }
 
-    this.templates = templates
+    this.handleChange()
   }
 
   render() {

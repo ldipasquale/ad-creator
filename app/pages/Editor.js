@@ -12,20 +12,18 @@ class Editor extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state = {
-      modifiers: null,
-    }
+    this.palette = {}
 
     this.handleChangePalette = this.handleChangePalette.bind(this)
     this.handleSubmitPalette = this.handleSubmitPalette.bind(this)
   }
 
   handleChangePalette(palette) {
-    this.setState({ palette })
+    this.palette = palette
   }
 
   handleSubmitPalette() {
-    console.log(this.state.palette)
+    console.log(this.palette)
   }
 
   getEditorFooter() {
