@@ -9,7 +9,9 @@ const PointerCircle = () => (
   <span className="jampp__ColorPicker__Pointer" />
 )
 
-const ColorPicker = ({ hex, hsl, hsv, onChange }) => (
+const ColorPicker = ({
+  hex, hsl, hsv, onChange,
+}) => (
   <div className="jampp__ColorPicker">
     <div className="jampp__ColorPicker__Saturation">
       <Saturation

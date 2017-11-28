@@ -20,11 +20,11 @@ class Carousel extends React.Component {
         <Slider
           arrows={false}
           dots={false}
-          infinite={true}
+          infinite
           slidesToShow={3}
           slidesToScroll={1}
-          centerMode={true}
-          focusOnSelect={true}
+          centerMode
+          focusOnSelect
           afterChange={this.props.onChange}
         >
           {this.props.children}

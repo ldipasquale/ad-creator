@@ -4,6 +4,5 @@ import GradientPicker from './'
 
 storiesOf('GradientPicker', module)
   .add('Default', () => (
-    <GradientPicker
-    />
+    <GradientPicker />
   ))

@@ -5,7 +5,9 @@ import cx from 'classnames'
 
 import './styles.sass'
 
-const AdFieldHandlerPanel = ({ className, onRef, isOpen, children, style }) => (
+const AdFieldHandlerPanel = ({
+  className, onRef, isOpen, children, style,
+}) => (
   <div
     className={cx({
       jampp__AdFieldHandler__Panel: true,

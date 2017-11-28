@@ -17,7 +17,9 @@ const componentsByElementsKind = {
   [elements.CONTAINED_TEXT]: ContainerTextHandler,
 }
 
-const AdFieldHandler = ({ type, onChange, modifiers, style }) => {
+const AdFieldHandler = ({
+  type, onChange, modifiers, style,
+}) => {
   const handleModifiersChange = newModifiers => onChange({
     ...modifiers,
     ...newModifiers,

@@ -8,7 +8,8 @@ function mapModifiersToStyle(modifiersValues) {
   const gradientStyle = {}
 
   Object.entries(modifiersValues).forEach(([modifierId, modifierValue]) => {
-    let styleId, styleValue
+    let styleId,
+      styleValue
 
     switch (modifierId) {
       case modifiers.BORDER_COLOR:

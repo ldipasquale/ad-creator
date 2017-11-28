@@ -4,6 +4,5 @@ import InputRange from './'
 
 storiesOf('InputRange', module)
   .add('Default', () => (
-    <InputRange
-    />
+    <InputRange />
   ))

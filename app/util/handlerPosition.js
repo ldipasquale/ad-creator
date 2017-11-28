@@ -12,7 +12,7 @@ function getHandlerPosition(element, adHeight) {
     }
   }
 
-  let topPosition = element.handlerPosition.top + element.style.height
+  const topPosition = element.handlerPosition.top + element.style.height
 
   /*
   const resizedAdHeight = adHeight * 0.8

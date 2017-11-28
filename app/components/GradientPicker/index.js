@@ -45,8 +45,8 @@ class GradientPicker extends React.Component {
             <span
               className={cx({
                 jampp__GradientPicker__Chooser__Track: true,
-                "jampp__GradientPicker__Chooser__Track--first": true,
-                "jampp__GradientPicker__Chooser__Track--active": this.state.activeColor === 'from',
+                'jampp__GradientPicker__Chooser__Track--first': true,
+                'jampp__GradientPicker__Chooser__Track--active': this.state.activeColor === 'from',
               })}
               onClick={() => this.handleActiveColorChange('from')}
             />
@@ -54,8 +54,8 @@ class GradientPicker extends React.Component {
             <span
               className={cx({
                 jampp__GradientPicker__Chooser__Track: true,
-                "jampp__GradientPicker__Chooser__Track--last": true,
-                "jampp__GradientPicker__Chooser__Track--active": this.state.activeColor === 'to',
+                'jampp__GradientPicker__Chooser__Track--last': true,
+                'jampp__GradientPicker__Chooser__Track--active': this.state.activeColor === 'to',
               })}
               onClick={() => this.handleActiveColorChange('to')}
             />

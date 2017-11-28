@@ -8,7 +8,9 @@ import './styles.sass'
 
 const mapTypeToBackground = (type, from, to) => backgroundGradients[type](from, to)
 
-const ColorLabel = ({ onClick, className, value, valueTo, gradientType }) => (
+const ColorLabel = ({
+  onClick, className, value, valueTo, gradientType,
+}) => (
   <span
     className={cx({
       jampp__ColorLabel: true,

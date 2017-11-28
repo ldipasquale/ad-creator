@@ -4,6 +4,5 @@ import Carousel from './'
 
 storiesOf('Carousel', module)
   .add('Default', () => (
-    <Carousel
-    />
+    <Carousel />
   ))

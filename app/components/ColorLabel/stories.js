@@ -4,6 +4,5 @@ import ColorLabel from './'
 
 storiesOf('ColorLabel', module)
   .add('Default', () => (
-    <ColorLabel
-    />
+    <ColorLabel />
   ))
