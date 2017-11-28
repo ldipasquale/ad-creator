@@ -18,6 +18,32 @@ class Ad extends React.Component {
     this.handleElementClick = this.handleElementClick.bind(this)
   }
 
+  componentWillMount() {
+    this.originalTag = this.props.children
+  }
+
+  componentDidMount() {
+    const scoperStyles = []
+
+    setTimeout(() => {
+      let parentElement = this.adContent.parentElement
+
+      while (parentElement.id.includes('scoper')) {
+        const scoperStyle = document.querySelector(`style[data-scoper=${parentElement.id}]`)
+
+        if (scoperStyle) {
+          const scoperStyleCSS = scoperStyle.innerHTML.replace(RegExp(`#${parentElement.id} `, 'g'), '')
+
+          scoperStyles.push(scoperStyleCSS)
+        }
+
+        parentElement = parentElement.parentElement
+      }
+
+      this.styleTag = `<style>${scoperStyles.reverse().join('</style><style>')}</style>`
+    }, 100)
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.selectedElement) {
       let selectedElement = this.adElement.querySelector(`[data-field=${nextProps.selectedElement.id}`)
@@ -80,7 +106,7 @@ class Ad extends React.Component {
         }
       })
 
-      this.props.onChangeTag(this.adContent.innerHTML)
+      this.props.onChangeTag(`${this.styleTag}${this.adContent.innerHTML}`)
     }
   }
 
@@ -133,7 +159,7 @@ class Ad extends React.Component {
             height: `${this.props.height}px`,
           }}
           dangerouslySetInnerHTML={{
-            __html: this.props.children,
+            __html: this.originalTag,
           }}
           onClick={this.handleElementClick}
           ref={(element) => { this.adContent = element }}
