@@ -105,7 +105,10 @@ Palette.propTypes = {
 Palette.defaultProps = {
   onChangeTag: null,
   onChangeModifiers: null,
-  placeholders: {},
+  placeholders: {
+    media: '/img/media.jpg',
+    icon: 'http://cdn.jampp.com/richmedia/HqJlrv5Y60B4aQEwGmMGYQ.jpg',
+  },
 }
 
 export default Palette

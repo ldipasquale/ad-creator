@@ -32,7 +32,7 @@ function scope(element, prefix) {
     const styleTag = style.innerHTML
 
     if (styleTag !== null) {
-      const styleId = `${prefix}-scoper${styleIndex}`
+      const styleId = `${prefix}_${styleIndex}`
       const stylePrefix = `#${styleId}`
 
       const newStyle = document.createElement('style')
@@ -56,4 +56,4 @@ function scope(element, prefix) {
   })
 }
 
-module.exports = scope
+export default scope

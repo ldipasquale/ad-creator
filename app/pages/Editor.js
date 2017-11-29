@@ -36,6 +36,7 @@ class Editor extends React.Component {
       ])
       .then(([theme, palette]) => {
         this.palette = {
+          originalTemplates: theme.templates,
           templates: theme.templates,
           fields: theme.fields,
         }
@@ -77,16 +78,15 @@ class Editor extends React.Component {
   }
 
   handleChangeTag(templateId, tag) {
-    const templateIndex = this.palette.templates.findIndex(template => template.id === templateId)
+    const templates = this.palette.templates.map(template => ({ ...template }))
+
+    const templateIndex = templates.findIndex(template => template.id === templateId)
 
     if (templateIndex !== -1) {
-      this.palette.templates[templateIndex].tag = tag
-    } else {
-      this.palette.templates.push({
-        id: templateId,
-        tag,
-      })
+      templates[templateIndex].tag = tag
     }
+
+    this.palette.templates = templates
   }
 
   handleSubmitPalette() {
@@ -107,7 +107,7 @@ class Editor extends React.Component {
           <Tabs>
             <TabsItem title="Work Mode">
               <Palette
-                templates={this.palette.templates}
+                templates={this.palette.originalTemplates}
                 fields={this.palette.fields}
                 modifiers={this.state.modifiers}
                 onChangeModifiers={this.handleChangeModifiers}
@@ -118,13 +118,15 @@ class Editor extends React.Component {
             <TabsItem title="Preview Area">
               <div>
                 <Palette
-                  templates={this.palette.templates}
+                  templates={this.palette.originalTemplates}
                   fields={this.palette.fields}
                   modifiers={this.state.modifiers}
                   placeholders={{
                     headline: 'Uber',
                     promoText: 'Get this app now',
                     callToAction: 'Download Now',
+                    media: 'https://s3.amazonaws.com/creatives.jampp.com/assets/99/1200x627_bHg_K4zBFpbdliQ2ULpGow.jpg',
+                    icon: 'http://cdn.jampp.com/richmedia/HqJlrv5Y60B4aQEwGmMGYQ.jpg',
                   }}
                 />
               </div>

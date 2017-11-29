@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import cx from 'classnames'
 
 const FontFamilyLabel = ({ children, selected, onClick }) => (
-  <span
+  <div
     className={cx({
       jampp__AdFieldHandler__FontSettingsHandler__FontFamilyHandler__Label: true,
       'jampp__AdFieldHandler__FontSettingsHandler__FontFamilyHandler__Label--selected': selected,
@@ -14,7 +14,7 @@ const FontFamilyLabel = ({ children, selected, onClick }) => (
     onClick={() => onClick(children)}
   >
     {children}
-  </span>
+  </div>
 )
 
 FontFamilyLabel.propTypes = {

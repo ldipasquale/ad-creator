@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import cx from 'classnames'
 
 import { mapModifiersToStyle } from 'util/modifiers'
+import { replacePlaceholdersInTag } from 'util/placeholders'
 
 import scopeCSS from 'util/cssScoper'
 import './styles.sass'
@@ -20,20 +21,26 @@ class Ad extends React.Component {
   }
 
   componentDidMount() {
-    let tag = this.props.children.replace(new RegExp('<style>', 'g'), '<style scoped>')
+    const tag = this.props.children.replace(new RegExp('<style>', 'g'), '<style scoped>')
 
-    Object.entries(this.props.placeholders).forEach(([placeholder, placeholderValue]) => {
-      tag = tag.replace(`{{${placeholder}}}`, placeholderValue)
-    })
+    const processedTag = replacePlaceholdersInTag(this.props.placeholders, tag)
 
     // eslint-disable-next-line react/no-did-mount-set-state
-    this.setState({ tag }, () => {
+    this.setState({
+      tag: processedTag,
+    }, () => {
       const styleNodes = [...this.adContent.querySelectorAll('style')]
       const styleTags = styleNodes.map(styleNode => styleNode.innerHTML)
 
       this.styleTag = `<style>${styleTags.reverse().join('</style><style>')}</style>`
 
-      scopeCSS(this.adContent, `adN${this.props.id}`)
+      scopeCSS(this.adContent, `adId${this.props.id}`)
+
+      if (this.props.modifiers) {
+        this.processModifiers(this.props.modifiers)
+      }
+
+      // console.log(this.adContent.innerHTML)
     })
   }
 
@@ -87,20 +94,12 @@ class Ad extends React.Component {
     }
 
     if (nextProps.modifiers) {
-      Object.entries(nextProps.modifiers).forEach(([elementId, elementModifiers]) => {
-        const element = this.adElement.querySelector(`[data-field=${elementId}`)
-
-        if (element) {
-          const elementStyle = mapModifiersToStyle(elementModifiers)
-
-          Object.entries(elementStyle).forEach(([styleId, styleValue]) => {
-            element.style[styleId] = styleValue
-          })
-        }
-      })
+      this.processModifiers(nextProps.modifiers)
 
       if (this.props.onChangeTag !== null) {
-        this.props.onChangeTag(`${this.styleTag}${this.adContent.innerHTML}`)
+        const adContent = this.adContent.innerHTML.replace(new RegExp(' data-field="(.+?)"', 'g'), '')
+
+        this.props.onChangeTag(`${this.styleTag}${adContent}`)
       }
     }
   }
@@ -143,6 +142,20 @@ class Ad extends React.Component {
     }
 
     return null
+  }
+
+  processModifiers(modifiers) {
+    Object.entries(modifiers).forEach(([elementId, elementModifiers]) => {
+      const element = this.adElement.querySelector(`[data-field=${elementId}`)
+
+      if (element) {
+        const elementStyle = mapModifiersToStyle(elementModifiers)
+
+        Object.entries(elementStyle).forEach(([styleId, styleValue]) => {
+          element.style[styleId] = styleValue
+        })
+      }
+    })
   }
 
   render() {
