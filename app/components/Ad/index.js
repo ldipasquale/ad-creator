@@ -4,7 +4,7 @@ import cx from 'classnames'
 
 import { mapModifiersToStyle } from 'util/modifiers'
 
-import 'util/cssScoper'
+import scopeCSS from 'util/cssScoper'
 import './styles.sass'
 
 class Ad extends React.Component {
@@ -13,56 +13,30 @@ class Ad extends React.Component {
 
     this.state = {
       highlightedElement: null,
-      originalTag: props.children,
-      tag: props.children,
+      tag: null,
     }
 
     this.handleElementClick = this.handleElementClick.bind(this)
   }
 
   componentDidMount() {
-    const scoperStyles = []
+    let tag = this.props.children.replace(new RegExp('<style>', 'g'), '<style scoped>')
 
-    setTimeout(() => {
-      let parentElement = this.adContent.parentElement
+    Object.entries(this.props.placeholders).forEach(([placeholder, placeholderValue]) => {
+      tag = tag.replace(`{{${placeholder}}}`, placeholderValue)
+    })
 
-      while (parentElement.id.includes('scoper')) {
-        const scoperStyle = document.querySelector(`style[data-scoper=${parentElement.id}]`)
+    this.setState({ tag }, () => {
+      const styleNodes = [...this.adContent.querySelectorAll('style')]
+      const styleTags = styleNodes.map(styleNode => styleNode.innerHTML)
 
-        if (scoperStyle) {
-          const scoperStyleCSS = scoperStyle.innerHTML.replace(RegExp(`#${parentElement.id} `, 'g'), '')
+      this.styleTag = `<style>${styleTags.reverse().join('</style><style>')}</style>`
 
-          scoperStyles.push(scoperStyleCSS)
-        }
-
-        parentElement = parentElement.parentElement
-      }
-
-      this.styleTag = `<style>${scoperStyles.reverse().join('</style><style>')}</style>`
-    }, 100)
+      scopeCSS(this.adContent, `adN${this.props.id}`)
+    })
   }
 
   componentWillReceiveProps(nextProps) {
-    const newPlaceholders = Object.entries(nextProps.placeholders)
-
-    /* TO-DO
-    if (newPlaceholders.length > 0) {
-      let tag = this.state.originalTag
-
-      newPlaceholders.forEach(([placeholder, placeholderValue]) => {
-        tag = tag.replace(`{{${placeholder}}}`, placeholderValue)
-      })
-
-      this.setState({ tag })
-    } else {
-      const oldPlaceholders = Object.entries(nextProps.placeholders)
-
-      if (oldPlaceholders.length > 0 && newPlaceholders.length === 0) {
-        this.setState({ tag: this.state.originalTag })
-      }
-    }
-    */
-
     if (nextProps.selectedElement) {
       let selectedElement = this.adElement.querySelector(`[data-field=${nextProps.selectedElement.id}`)
 
@@ -213,6 +187,7 @@ Ad.propTypes = {
     type: PropTypes.string,
   }),
   children: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   modifiers: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types

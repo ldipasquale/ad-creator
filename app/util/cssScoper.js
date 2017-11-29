@@ -1,92 +1,60 @@
-/* global exports */
-
-function init() {
-  var style = document.createElement("style")
-  style.appendChild(document.createTextNode(""))
-  document.head.appendChild(style)
-  style.sheet.insertRule("body { visibility: hidden }", 0)
-}
-
-function scoper(css, prefix) {
+function scopeTag(tag, prefix) {
   var re = new RegExp("([^\r\n,{}]+)(,(?=[^}]*{)|\s*{)", "g")
-  css = css.replace(re, (g0, g1, g2) => {
-    if (g1.match(/^\s*(@media|@keyframes|to|from|@font-face)/)) {
-      return g1 + g2
+
+  tag = tag.replace(re, (trash, element, brackets) => {
+    if (element.match(/^\s*(@media|@keyframes|to|from|@font-face)/)) {
+      return `${element}${brackets}`
     }
 
-    if (g1.match(/:scope/)) {
-      g1 = g1.replace(/([^\s]*):scope/, function(h0, h1) {
+    if (element.match(/:scope/)) {
+      element = element.replace(/([^\s]*):scope/, ((h0, h1) => {
         if (h1 === "") {
           return "> *"
         } else {
           return "> " + h1
         }
-      })
+      }))
     }
 
-    g1 = g1.replace(/^(\s*)/, "$1" + prefix + " ")
+    element = element.replace(/^(\s*)/, `$1${prefix} `)
 
-    return g1 + g2
+    return `${element}${brackets}`
   })
   
-  return css
+  return tag
 }
 
-function process() {
-  var styles = document.body.querySelectorAll("style[scoped]")
+function scope(element, prefix) {
+  const styles = element.querySelectorAll("style[scoped]")
 
-  if (styles.length === 0) {
-    document.getElementsByTagName("body")[0].style.visibility = "visible"
-    return
-  }
+  const head = document.head || document.getElementsByTagName("head")[0]
 
-  var head = document.head || document.getElementsByTagName("head")[0]
+  styles.forEach((style, styleIndex) => {
+    const styleTag = style.innerHTML
 
-  for (var i = 0; i < styles.length; i++) {
-    var style = styles[i]
-    var css = style.innerHTML
+    if (styleTag !== null) {
+      const styleId = `${prefix}-scoper${styleIndex}`
+      const stylePrefix = `#${styleId}`
 
-    if (css && (style.parentElement.nodeName !== "BODY")) {
-      var id = "scoper-" + i
-      var prefix = "#" + id
+      const newStyle = document.createElement("style")
 
-      var newstyle = document.createElement("style")
-      newstyle.dataset.scoper = id
+      const wrapperNode = document.createElement("span")
+      wrapperNode.id = styleId
 
-      var wrapper = document.createElement("span")
-      wrapper.id = id
+      const parentNode = style.parentNode
+      const grandParentNode = parentNode.parentNode
 
-      var parent = style.parentNode
-      var grandparent = parent.parentNode
-
-      grandparent.replaceChild(wrapper, parent)
-      wrapper.appendChild(parent)
+      grandParentNode.replaceChild(wrapperNode, parentNode)
+      wrapperNode.appendChild(parentNode)
       style.parentNode.removeChild(style)
 
-      var csses = scoper(css, prefix)
+      const scopedStyleTag = scopeTag(styleTag, stylePrefix)
 
-      newstyle.appendChild(document.createTextNode(csses))
-      head.appendChild(newstyle)
+      newStyle.appendChild(document.createTextNode(scopedStyleTag))
+
+      head.appendChild(newStyle)
     }
-  }
-
-  document.getElementsByTagName("body")[0].style.visibility = "visible"
+  })
 }
 
-(function() {
-  if ("scoped" in document.createElement("style")) {
-    return
-  }
-  
-  init()
-
-  if (document.readyState === "complete" || document.readyState === "loaded") {
-    process()
-  } else {
-    document.addEventListener("DOMContentLoaded", process)
-  }
-}())
-
-if (typeof exports !== "undefined") {
-  exports.scoper = scoper
-}
+module.exports = scope

@@ -95,8 +95,6 @@ class Editor extends React.Component {
       ...this.palette,
       modifiers: this.state.modifiers,
     }
-
-    console.log(palette)
   }
 
   render() {
@@ -117,16 +115,18 @@ class Editor extends React.Component {
             </TabsItem>
 
             <TabsItem title="Preview Area">
-              <Palette
-                templates={this.palette.templates}
-                fields={this.palette.fields}
-                modifiers={this.state.modifiers}
-                placeholders={{
-                  headline: 'Uber',
-                  promoText: 'Get this app now',
-                  callToAction: 'Download Now',
-                }}
-              />
+              <div>
+                <Palette
+                  templates={this.palette.templates}
+                  fields={this.palette.fields}
+                  modifiers={this.state.modifiers}
+                  placeholders={{
+                    headline: 'Uber',
+                    promoText: 'Get this app now',
+                    callToAction: 'Download Now',
+                  }}
+                />
+              </div>
             </TabsItem>
           </Tabs>
         )}

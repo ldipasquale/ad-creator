@@ -69,6 +69,7 @@ class Palette extends React.Component {
             <div key={template.id}>
               <Device model="nexus5">
                 <Ad
+                  id={template.id}
                   width={template.width}
                   height={template.height}
                   modifiers={this.props.modifiers}
