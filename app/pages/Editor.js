@@ -3,7 +3,6 @@ import React from 'react'
 import Dashboard from 'components/Dashboard'
 import Button from 'components/Button'
 import Input from 'components/Input'
-import Device from 'components/Device'
 import { Tabs, TabsItem } from 'components/Tabs'
 import Palette from 'components/Palette'
 
@@ -95,6 +94,8 @@ class Editor extends React.Component {
       ...this.palette,
       modifiers: this.state.modifiers,
     }
+
+    console.log(palette)
   }
 
   render() {

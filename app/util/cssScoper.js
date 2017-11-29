@@ -1,18 +1,19 @@
 function scopeTag(tag, prefix) {
-  var re = new RegExp("([^\r\n,{}]+)(,(?=[^}]*{)|\s*{)", "g")
+  const re = new RegExp('([^\r\n,{}]+)(,(?=[^}]*{)|\s*{)', 'g') // eslint-disable-line no-control-regex,no-useless-escape
 
-  tag = tag.replace(re, (trash, element, brackets) => {
-    if (element.match(/^\s*(@media|@keyframes|to|from|@font-face)/)) {
-      return `${element}${brackets}`
+  return tag.replace(re, (trash, rawElement, brackets) => {
+    if (rawElement.match(/^\s*(@media|@keyframes|to|from|@font-face)/)) {
+      return `${rawElement}${brackets}`
     }
 
+    let element = rawElement
+
     if (element.match(/:scope/)) {
-      element = element.replace(/([^\s]*):scope/, ((h0, h1) => {
-        if (h1 === "") {
-          return "> *"
-        } else {
-          return "> " + h1
+      element = rawElement.replace(/([^\s]*):scope/, ((h0, h1) => {
+        if (h1 === '') {
+          return '> *'
         }
+        return `> ${h1}`
       }))
     }
 
@@ -20,14 +21,12 @@ function scopeTag(tag, prefix) {
 
     return `${element}${brackets}`
   })
-  
-  return tag
 }
 
 function scope(element, prefix) {
-  const styles = element.querySelectorAll("style[scoped]")
+  const styles = element.querySelectorAll('style[scoped]')
 
-  const head = document.head || document.getElementsByTagName("head")[0]
+  const head = document.head || document.getElementsByTagName('head')[0]
 
   styles.forEach((style, styleIndex) => {
     const styleTag = style.innerHTML
@@ -36,12 +35,12 @@ function scope(element, prefix) {
       const styleId = `${prefix}-scoper${styleIndex}`
       const stylePrefix = `#${styleId}`
 
-      const newStyle = document.createElement("style")
+      const newStyle = document.createElement('style')
 
-      const wrapperNode = document.createElement("span")
+      const wrapperNode = document.createElement('span')
       wrapperNode.id = styleId
 
-      const parentNode = style.parentNode
+      const { parentNode } = style
       const grandParentNode = parentNode.parentNode
 
       grandParentNode.replaceChild(wrapperNode, parentNode)

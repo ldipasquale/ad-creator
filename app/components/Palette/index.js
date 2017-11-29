@@ -99,7 +99,7 @@ Palette.propTypes = {
   modifiers: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   fields: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   templates: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
-  placeholders: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  placeholders: PropTypes.object, // eslint-disable-line react/forbid-prop-types
 }
 
 Palette.defaultProps = {

@@ -26,6 +26,7 @@ class Ad extends React.Component {
       tag = tag.replace(`{{${placeholder}}}`, placeholderValue)
     })
 
+    // eslint-disable-next-line react/no-did-mount-set-state
     this.setState({ tag }, () => {
       const styleNodes = [...this.adContent.querySelectorAll('style')]
       const styleTags = styleNodes.map(styleNode => styleNode.innerHTML)
@@ -140,6 +141,8 @@ class Ad extends React.Component {
         },
       })
     }
+
+    return null
   }
 
   render() {
@@ -192,6 +195,7 @@ Ad.propTypes = {
   height: PropTypes.number.isRequired,
   modifiers: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   fields: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  placeholders: PropTypes.object, // eslint-disable-line react/forbid-prop-types
 }
 
 Ad.defaultProps = {
@@ -199,6 +203,7 @@ Ad.defaultProps = {
   onSelectElement: null,
   onCancelSelection: null,
   selectedElement: {},
+  placeholders: {},
 }
 
 export default Ad
