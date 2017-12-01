@@ -71,9 +71,7 @@ class Ad extends React.Component {
       ? hasCurrentSelection
         ? this.state.highlightedElement.id !== newHighlightedElement.id
         : false
-      : hasCurrentSelection
-        ? true
-        : false
+      : !!hasCurrentSelection
 
     if (didUpdateSelection) {
       let selectedElement = this.adElement.querySelector(`[data-field=${newHighlightedElement.id}`)
@@ -129,7 +127,7 @@ class Ad extends React.Component {
   handleChangeTag() {
     const adContent = this.adContent.cloneNode(true)
 
-    this.props.fields.forEach(field => {
+    this.props.fields.forEach((field) => {
       if (field.type === elements.TEXT || field.type === elements.CONTAINED_TEXT) {
         const fieldElement = adContent.querySelector(`[data-field=${field.id}`)
 
