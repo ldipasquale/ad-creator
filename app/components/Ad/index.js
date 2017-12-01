@@ -2,8 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
 
+import elements from 'constants/elements'
+
 import { mapModifiersToStyle } from 'util/modifiers'
 import { replacePlaceholdersInTag } from 'util/placeholders'
+import { tagToNode } from 'util/dom'
 
 import scopeCSS from 'util/cssScoper'
 import './styles.sass'
@@ -17,7 +20,9 @@ class Ad extends React.Component {
       tag: null,
     }
 
+    this.handleChangeTag = this.handleChangeTag.bind(this)
     this.handleElementClick = this.handleElementClick.bind(this)
+    this.processHighlightedElementSelection = this.processHighlightedElementSelection.bind(this)
   }
 
   componentDidMount() {
@@ -45,18 +50,45 @@ class Ad extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.selectedElement) {
-      let selectedElement = this.adElement.querySelector(`[data-field=${nextProps.selectedElement.id}`)
+    this.processHighlightedElementSelection(nextProps.selectedElement)
+
+    if (nextProps.modifiers) {
+      this.processModifiers(nextProps.modifiers)
+
+      if (this.props.onChangeTag !== null) {
+        this.handleChangeTag()
+      }
+    }
+  }
+
+  processHighlightedElementSelection(newHighlightedElement) {
+    let didNotFoundSelection = false
+
+    const hasPreviousSelection = this.state.highlightedElement !== null
+    const hasCurrentSelection = newHighlightedElement !== null
+
+    const didUpdateSelection = hasPreviousSelection
+      ? hasCurrentSelection
+        ? this.state.highlightedElement.id !== newHighlightedElement.id
+        : false
+      : hasCurrentSelection
+        ? true
+        : false
+
+    if (didUpdateSelection) {
+      let selectedElement = this.adElement.querySelector(`[data-field=${newHighlightedElement.id}`)
 
       let extraMargin = 10
       let extraBorderRadius = 5
 
-      if (selectedElement) {
-        if (nextProps.selectedElement.id === 'container') {
+      if (!selectedElement) {
+        didNotFoundSelection = true
+      } else {
+        if (newHighlightedElement.id === 'container') {
           [selectedElement] = selectedElement.childNodes
         }
 
-        if (nextProps.selectedElement.id.toLowerCase().includes('container')) {
+        if (newHighlightedElement.id.toLowerCase().includes('container')) {
           extraMargin = 0
           extraBorderRadius = -1
         }
@@ -66,11 +98,11 @@ class Ad extends React.Component {
 
         const adElementProperties = this.adElement.getBoundingClientRect()
 
-        this.setState({
+        return this.setState({
           highlightedElement: {
-            id: nextProps.selectedElement.id,
-            type: nextProps.selectedElement.type,
-            blockOutside: nextProps.selectedElement.id !== 'container',
+            id: newHighlightedElement.id,
+            type: newHighlightedElement.type,
+            blockOutside: newHighlightedElement.id !== 'container',
             style: {
               width: Math.floor(selectedElementProperties.width) + extraMargin,
               height: Math.ceil(selectedElementProperties.height) + extraMargin,
@@ -82,26 +114,36 @@ class Ad extends React.Component {
             },
           },
         })
-      } else {
-        this.setState({
-          highlightedElement: null,
-        })
       }
-    } else {
-      this.setState({
+    }
+
+    if (didNotFoundSelection || !hasCurrentSelection) {
+      return this.setState({
         highlightedElement: null,
       })
     }
 
-    if (nextProps.modifiers) {
-      this.processModifiers(nextProps.modifiers)
+    return null
+  }
 
-      if (this.props.onChangeTag !== null) {
-        const adContent = this.adContent.innerHTML.replace(new RegExp(' data-field="(.+?)"', 'g'), '')
+  handleChangeTag() {
+    const adContent = this.adContent.cloneNode(true)
 
-        this.props.onChangeTag(`${this.styleTag}${adContent}`)
+    this.props.fields.forEach(field => {
+      if (field.type === elements.TEXT || field.type === elements.CONTAINED_TEXT) {
+        const fieldElement = adContent.querySelector(`[data-field=${field.id}`)
+
+        if (fieldElement !== null) {
+          fieldElement.innerHTML = `{{${field.id}}}`
+        }
       }
-    }
+    })
+
+    let adContentTag = adContent.innerHTML
+
+    adContentTag = adContentTag.replace(new RegExp(' data-field="(.+?)"', 'g'), '')
+
+    this.props.onChangeTag(`${this.styleTag}${adContentTag}`)
   }
 
   handleElementClick(event) {

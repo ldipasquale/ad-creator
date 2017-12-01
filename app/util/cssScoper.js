@@ -2,7 +2,7 @@ function scopeTag(tag, prefix) {
   const re = new RegExp('([^\r\n,{}]+)(,(?=[^}]*{)|\s*{)', 'g') // eslint-disable-line no-control-regex,no-useless-escape
 
   return tag.replace(re, (trash, rawElement, brackets) => {
-    if (rawElement.match(/^\s*(@media|@keyframes|to|from|@font-face)/)) {
+    if (rawElement.match(/^\s*(@media|@.*keyframes|to|from|@font-face|1?[0-9]?[0-9])/)) {
       return `${rawElement}${brackets}`
     }
 
