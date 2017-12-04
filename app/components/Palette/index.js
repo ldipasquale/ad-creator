@@ -72,15 +72,14 @@ class Palette extends React.Component {
                   id={template.id}
                   width={template.width}
                   height={template.height}
-                  modifiers={this.props.modifiers}
                   fields={this.props.fields}
-                  {...this.props.onChangeTag !== null && this.props.onChangeModifiers !== null && {
+                  placeholders={this.props.placeholders}
+                  {...this.props.onChangeModifiers !== null && {
                     onSelectElement: this.handleSelectElement,
                     onCancelSelection: this.handleCancelSelection,
                     onChangeTag: tag => this.handleChangeTag(template.id, tag),
                     selectedElement: this.state.highlightedElement,
                   }}
-                  placeholders={this.props.placeholders}
                 >
                   {template.tag}
                 </Ad>
@@ -105,10 +104,7 @@ Palette.propTypes = {
 Palette.defaultProps = {
   onChangeTag: null,
   onChangeModifiers: null,
-  placeholders: {
-    media: '/img/media.jpg',
-    icon: 'http://cdn.jampp.com/richmedia/HqJlrv5Y60B4aQEwGmMGYQ.jpg',
-  },
+  placeholders: {},
 }
 
 export default Palette

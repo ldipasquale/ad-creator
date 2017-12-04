@@ -2,13 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
 
-import elements from 'constants/elements'
+import { replacePlaceholders } from 'util/tags'
+import { scopeCss } from 'util/dom'
 
-import { mapModifiersToStyle } from 'util/modifiers'
-import { replacePlaceholdersInTag } from 'util/placeholders'
-import { tagToNode } from 'util/dom'
-
-import scopeCSS from 'util/cssScoper'
 import './styles.sass'
 
 class Ad extends React.Component {
@@ -20,45 +16,40 @@ class Ad extends React.Component {
       tag: null,
     }
 
-    this.handleChangeTag = this.handleChangeTag.bind(this)
+    this.scopeTag = this.scopeTag.bind(this)
+    this.updateTag = this.updateTag.bind(this)
     this.handleElementClick = this.handleElementClick.bind(this)
     this.processHighlightedElementSelection = this.processHighlightedElementSelection.bind(this)
   }
 
   componentDidMount() {
-    const tag = this.props.children.replace(new RegExp('<style>', 'g'), '<style scoped>')
-
-    const processedTag = replacePlaceholdersInTag(this.props.placeholders, tag)
-
-    // eslint-disable-next-line react/no-did-mount-set-state
-    this.setState({
-      tag: processedTag,
-    }, () => {
-      const styleNodes = [...this.adContent.querySelectorAll('style')]
-      const styleTags = styleNodes.map(styleNode => styleNode.innerHTML)
-
-      this.styleTag = `<style>${styleTags.reverse().join('</style><style>')}</style>`
-
-      scopeCSS(this.adContent, `adId${this.props.id}`)
-
-      if (this.props.modifiers) {
-        this.processModifiers(this.props.modifiers)
-      }
-
-      // console.log(this.adContent.innerHTML)
-    })
+    this.updateTag(this.props.children)
   }
 
   componentWillReceiveProps(nextProps) {
-    this.processHighlightedElementSelection(nextProps.selectedElement)
-
-    if (nextProps.modifiers) {
-      this.processModifiers(nextProps.modifiers)
-
-      if (this.props.onChangeTag !== null) {
-        this.handleChangeTag()
-      }
+    if (this.props.children !== nextProps.children) {
+      this.updateTag(nextProps.children)
     }
+
+    this.processHighlightedElementSelection(nextProps.selectedElement)
+  }
+
+  scopeTag(tag) {
+    const scopedTag = tag.replace(new RegExp('<style>', 'g'), '<style scoped>')
+
+    this.setState({
+      tag: scopedTag,
+    }, () => scopeCss(this.adContent, `adId${this.props.id}`))
+  }
+
+  updateTag(rawTag) {
+    let tag = rawTag
+
+    if (this.props.placeholders) {
+      tag = replacePlaceholders(tag, this.props.placeholders)
+    }
+
+    this.scopeTag(tag)
   }
 
   processHighlightedElementSelection(newHighlightedElement) {
@@ -124,26 +115,6 @@ class Ad extends React.Component {
     return null
   }
 
-  handleChangeTag() {
-    const adContent = this.adContent.cloneNode(true)
-
-    this.props.fields.forEach((field) => {
-      if (field.type === elements.TEXT || field.type === elements.CONTAINED_TEXT) {
-        const fieldElement = adContent.querySelector(`[data-field=${field.id}`)
-
-        if (fieldElement !== null) {
-          fieldElement.innerHTML = `{{${field.id}}}`
-        }
-      }
-    })
-
-    let adContentTag = adContent.innerHTML
-
-    adContentTag = adContentTag.replace(new RegExp(' data-field="(.+?)"', 'g'), '')
-
-    this.props.onChangeTag(`${this.styleTag}${adContentTag}`)
-  }
-
   handleElementClick(event) {
     event.preventDefault()
 
@@ -184,20 +155,6 @@ class Ad extends React.Component {
     return null
   }
 
-  processModifiers(modifiers) {
-    Object.entries(modifiers).forEach(([elementId, elementModifiers]) => {
-      const element = this.adElement.querySelector(`[data-field=${elementId}`)
-
-      if (element) {
-        const elementStyle = mapModifiersToStyle(elementModifiers)
-
-        Object.entries(elementStyle).forEach(([styleId, styleValue]) => {
-          element.style[styleId] = styleValue
-        })
-      }
-    })
-  }
-
   render() {
     return (
       <div
@@ -217,7 +174,7 @@ class Ad extends React.Component {
           ref={(element) => { this.adContent = element }}
         />
 
-        {this.state.highlightedElement && this.props.modifiers[this.state.highlightedElement.id] && (
+        {this.state.highlightedElement && (
           <div className="jampp__Ad__Selection">
             <span
               className={cx({
@@ -235,7 +192,6 @@ class Ad extends React.Component {
 }
 
 Ad.propTypes = {
-  onChangeTag: PropTypes.func,
   onSelectElement: PropTypes.func,
   onCancelSelection: PropTypes.func,
   selectedElement: PropTypes.shape({
@@ -246,13 +202,11 @@ Ad.propTypes = {
   id: PropTypes.number.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
-  modifiers: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   fields: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   placeholders: PropTypes.object, // eslint-disable-line react/forbid-prop-types
 }
 
 Ad.defaultProps = {
-  onChangeTag: null,
   onSelectElement: null,
   onCancelSelection: null,
   selectedElement: {},

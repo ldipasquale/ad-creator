@@ -6,6 +6,9 @@ import Input from 'components/Input'
 import { Tabs, TabsItem } from 'components/Tabs'
 import Palette from 'components/Palette'
 
+import { processModifiers } from 'util/tags'
+import { debounce } from 'util/timing'
+
 import ThemeService from 'services/Theme'
 import PaletteService from 'services/Palette'
 
@@ -16,15 +19,11 @@ class Editor extends React.Component {
     this.state = {
       isFetching: true,
       modifiers: {},
-    }
-
-    this.palette = {
       templates: [],
       fields: [],
     }
 
     this.handleChangeModifiers = this.handleChangeModifiers.bind(this)
-    this.handleChangeTag = this.handleChangeTag.bind(this)
     this.handleSubmitPalette = this.handleSubmitPalette.bind(this)
   }
 
@@ -35,15 +34,12 @@ class Editor extends React.Component {
         PaletteService.get(),
       ])
       .then(([theme, palette]) => {
-        this.palette = {
-          originalTemplates: theme.templates,
-          templates: theme.templates,
-          fields: theme.fields,
-        }
-
         this.setState({
           isFetching: false,
           modifiers: palette.modifiers,
+          originalTemplates: theme.templates,
+          templates: theme.templates,
+          fields: theme.fields,
         })
       })
   }
@@ -74,25 +70,22 @@ class Editor extends React.Component {
   }
 
   handleChangeModifiers(modifiers) {
-    this.setState({ modifiers })
-  }
-
-  handleChangeTag(templateId, tag) {
-    const templates = this.palette.templates.map(template => ({ ...template }))
-
-    const templateIndex = templates.findIndex(template => template.id === templateId)
-
-    if (templateIndex !== -1) {
-      templates[templateIndex].tag = tag
-    }
-
-    this.palette.templates = templates
+    this.setState({
+      modifiers,
+    }, debounce(() => {
+      this.setState({
+        templates: this.state.originalTemplates.map(originalTemplate => ({
+          ...originalTemplate,
+          tag: processModifiers(originalTemplate.tag, modifiers),
+        })),
+      })
+    }, 75))
   }
 
   handleSubmitPalette() {
     const palette = {
-      ...this.palette,
       modifiers: this.state.modifiers,
+      templates: this.state.templates,
     }
 
     console.log(palette)
@@ -107,19 +100,22 @@ class Editor extends React.Component {
           <Tabs>
             <TabsItem title="Work Mode">
               <Palette
-                templates={this.palette.originalTemplates}
-                fields={this.palette.fields}
+                templates={this.state.templates}
+                fields={this.state.fields}
                 modifiers={this.state.modifiers}
                 onChangeModifiers={this.handleChangeModifiers}
-                onChangeTag={this.handleChangeTag}
+                placeholders={{
+                  icon: 'http://cdn.jampp.com/richmedia/HqJlrv5Y60B4aQEwGmMGYQ.jpg',
+                  media: 'http://cdn.jampp.com/richmedia/P2MFnhOtVTUIyuO6J1Sm9A.jpg',
+                }}
               />
             </TabsItem>
 
             <TabsItem title="Preview Area">
               <div>
                 <Palette
-                  templates={this.palette.originalTemplates}
-                  fields={this.palette.fields}
+                  templates={this.state.templates}
+                  fields={this.state.fields}
                   modifiers={this.state.modifiers}
                   placeholders={{
                     headline: 'Uber',
