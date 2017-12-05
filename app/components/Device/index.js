@@ -4,15 +4,21 @@ import cx from 'classnames'
 
 import './styles.sass'
 
-const Device = ({ children, model, small }) => (
+const Device = ({ children, model, landscape }) => (
   <div
     className={cx({
       jampp__Device: true,
-      'jampp__Device--small': small,
+      'jampp__Device--landscape': landscape,
     })}
   >
     <div className="jampp__Device__Content">
-      <div className={`jampp__Device__Model jampp__Device__Model--${model}`}>
+      <div
+        className={cx({
+          jampp__Device__Model: true,
+          [`jampp__Device__Model--${model}`]: true,
+          [`jampp__Device__Model--${model}--landscape`]: landscape,
+        })}
+      >
         <div className="top-bar" />
         <div className="sleep" />
         <div className="volume" />
@@ -31,12 +37,12 @@ const Device = ({ children, model, small }) => (
 
 Device.propTypes = {
   children: PropTypes.node.isRequired,
-  small: PropTypes.bool,
+  landscape: PropTypes.bool,
   model: PropTypes.node,
 }
 
 Device.defaultProps = {
-  small: false,
+  landscape: false,
   model: 'nexus5',
 }
 

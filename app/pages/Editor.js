@@ -5,11 +5,11 @@ import Button from 'components/Button'
 import Input from 'components/Input'
 import { Tabs, TabsItem } from 'components/Tabs'
 import Palette from 'components/Palette'
+import ButtonList from 'components/ButtonList'
 
 import { processModifiers } from 'util/tags'
 import { debounce } from 'util/timing'
 
-import ThemeService from 'services/Theme'
 import PaletteService from 'services/Palette'
 
 class Editor extends React.Component {
@@ -18,6 +18,7 @@ class Editor extends React.Component {
 
     this.state = {
       isFetching: true,
+      name: 'OLX',
       modifiers: {},
       templates: [],
       fields: [],
@@ -25,23 +26,18 @@ class Editor extends React.Component {
 
     this.handleChangeModifiers = this.handleChangeModifiers.bind(this)
     this.handleSubmitPalette = this.handleSubmitPalette.bind(this)
+    this.handleDiscardPalette = this.handleDiscardPalette.bind(this)
+    this.handleChangeName = this.handleChangeName.bind(this)
   }
 
   componentDidMount() {
-    Promise
-      .all([
-        ThemeService.get(),
-        PaletteService.get(),
-      ])
-      .then(([theme, palette]) => {
-        this.setState({
-          isFetching: false,
-          modifiers: palette.modifiers,
-          originalTemplates: theme.templates,
-          templates: theme.templates,
-          fields: theme.fields,
-        })
-      })
+    PaletteService.get().then(palette => this.setState({
+      isFetching: false,
+      modifiers: palette.modifiers,
+      originalTemplates: palette.templates,
+      templates: palette.templates,
+      fields: palette.fields,
+    }))
   }
 
   getEditorFooter() {
@@ -49,14 +45,18 @@ class Editor extends React.Component {
       <div>
         <Input
           label="Palette Name"
-          value="OLX"
+          value={this.state.name}
+          onChange={this.handleChangeName}
           width={300}
         />
 
-        <div style={{ float: 'right', position: 'relative', top: '5px' }}>
-          <div style={{ marginRight: '8px', display: 'inline-block' }}>
-            <Button theme="danger">Discard Palette</Button>
-          </div>
+        <ButtonList style={{ float: 'right', position: 'relative', top: '5px' }}>
+          <Button
+            theme="danger"
+            onClick={this.handleDiscardPalette}
+          >
+            Discard Palette
+          </Button>
 
           <Button
             theme="success"
@@ -64,7 +64,7 @@ class Editor extends React.Component {
           >
             Save Palette
           </Button>
-        </div>
+        </ButtonList>
       </div>
     )
   }
@@ -72,23 +72,34 @@ class Editor extends React.Component {
   handleChangeModifiers(modifiers) {
     this.setState({
       modifiers,
-    }, debounce(() => {
-      this.setState({
-        templates: this.state.originalTemplates.map(originalTemplate => ({
-          ...originalTemplate,
-          tag: processModifiers(originalTemplate.tag, modifiers),
-        })),
-      })
-    }, 75))
+    }, debounce(() => this.setState({
+      templates: this.state.originalTemplates.map(originalTemplate => ({
+        ...originalTemplate,
+        tag: processModifiers(originalTemplate.tag, modifiers),
+      })),
+    }), 75))
+  }
+
+  handleChangeName(name) {
+    this.setState({ name })
   }
 
   handleSubmitPalette() {
     const palette = {
+      name: this.state.name,
       modifiers: this.state.modifiers,
-      templates: this.state.templates,
+      templates: this.state.templates.map(template => ({
+        width: template.width,
+        height: template.height,
+        tag: template.tag,
+      })),
     }
 
-    console.log(palette)
+    return PaletteService.save(palette)
+  }
+
+  handleDiscardPalette() {
+    console.log('exit')
   }
 
   render() {
@@ -100,14 +111,14 @@ class Editor extends React.Component {
           <Tabs>
             <TabsItem title="Work Mode">
               <Palette
-                templates={this.state.templates}
+                templates={this.state.templates.map(template => ({...template}))}
                 fields={this.state.fields}
                 modifiers={this.state.modifiers}
-                onChangeModifiers={this.handleChangeModifiers}
                 placeholders={{
                   icon: 'http://cdn.jampp.com/richmedia/HqJlrv5Y60B4aQEwGmMGYQ.jpg',
                   media: 'http://cdn.jampp.com/richmedia/P2MFnhOtVTUIyuO6J1Sm9A.jpg',
                 }}
+                onChangeModifiers={this.handleChangeModifiers}
               />
             </TabsItem>
 

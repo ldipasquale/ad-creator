@@ -13,7 +13,7 @@ const mapNodeToTabs = tabs => React.Children.map(tabs, child => ({
   headerClassName: child.props.headerClassName,
 }))
 
-class Tabs extends React.PureComponent {
+class Tabs extends React.Component {
   constructor(props) {
     super(props)
 
@@ -82,9 +82,7 @@ class Tabs extends React.PureComponent {
         </div>
 
         <div
-          className={classNames({
-            [this.props.classNames.body]: true,
-          })}
+          className={this.props.classNames.body}
           style={this.props.bodyStyle}
         >
           {this.props.children[this.state.activeTabIndex]}

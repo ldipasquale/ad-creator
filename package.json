@@ -52,6 +52,7 @@
   "dependencies": {
     "@storybook/addon-storyshots": "^3.2.15",
     "@storybook/react": "^3.2.15",
+    "axios": "^0.17.1",
     "classnames": "^2.2.5",
     "css-scoper": "^1.0.2",
     "dsv-loader": "^2.0.0",

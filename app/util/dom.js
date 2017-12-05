@@ -34,7 +34,11 @@ function scopeTag(tag, prefix) {
   })
 }
 
-function scopeCss(element, prefix) {
+function scopeCss(element, originalDestination, prefix) {
+  let destination = originalDestination
+
+  destination.innerHTML = ''
+
   const styles = element.querySelectorAll('style[scoped]')
 
   const head = document.head || document.getElementsByTagName('head')[0]
@@ -51,11 +55,8 @@ function scopeCss(element, prefix) {
       const wrapperNode = document.createElement('span')
       wrapperNode.id = styleId
 
-      const { parentNode } = style
-      const grandParentNode = parentNode.parentNode
-
-      grandParentNode.replaceChild(wrapperNode, parentNode)
-      wrapperNode.appendChild(parentNode)
+      destination = destination.appendChild(wrapperNode)
+      wrapperNode.appendChild(style.parentNode)
       style.parentNode.removeChild(style)
 
       const scopedStyleTag = scopeTag(styleTag, stylePrefix)

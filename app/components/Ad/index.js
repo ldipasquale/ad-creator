@@ -39,7 +39,7 @@ class Ad extends React.Component {
 
     this.setState({
       tag: scopedTag,
-    }, () => scopeCss(this.adContent, `adId${this.props.id}`))
+    }, () => scopeCss(this.adContent, this.adContentWrapper, `adId${this.props.id}`))
   }
 
   updateTag(rawTag) {
@@ -161,18 +161,20 @@ class Ad extends React.Component {
         className="jampp__Ad"
         ref={(element) => { this.adElement = element }}
       >
-        <div
-          className="jampp__Ad__Content"
-          style={{
-            width: `${this.props.width}px`,
-            height: `${this.props.height}px`,
-          }}
-          dangerouslySetInnerHTML={{
-            __html: this.state.tag,
-          }}
-          onClick={this.handleElementClick}
-          ref={(element) => { this.adContent = element }}
-        />
+        <div ref={(element) => { this.adContentWrapper = element }}>
+          <div
+            className="jampp__Ad__Content"
+            style={{
+              width: `${this.props.width}px`,
+              height: `${this.props.height}px`,
+            }}
+            dangerouslySetInnerHTML={{
+              __html: this.state.tag,
+            }}
+            onClick={this.handleElementClick}
+            ref={(element) => { this.adContent = element }}
+          />
+        </div>
 
         {this.state.highlightedElement && (
           <div className="jampp__Ad__Selection">

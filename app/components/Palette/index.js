@@ -18,16 +18,9 @@ class Palette extends React.Component {
       highlightedElement: null,
     }
 
-    this.handleChangeTag = this.handleChangeTag.bind(this)
     this.handleChangeModifiers = this.handleChangeModifiers.bind(this)
     this.handleSelectElement = this.handleSelectElement.bind(this)
     this.handleCancelSelection = this.handleCancelSelection.bind(this)
-  }
-
-  handleChangeTag(templateId, tag) {
-    if (this.props.onChangeTag !== null) {
-      this.props.onChangeTag(templateId, tag)
-    }
   }
 
   handleChangeModifiers(elementId, modifiers) {
@@ -67,7 +60,10 @@ class Palette extends React.Component {
         <Carousel onChange={() => this.setState({ highlightedElement: null })}>
           {this.props.templates.map(template => (
             <div key={template.id}>
-              <Device model="nexus5">
+              <Device
+                model="nexus5"
+                landscape={template.landscape}
+              >
                 <Ad
                   id={template.id}
                   width={template.width}
@@ -77,7 +73,6 @@ class Palette extends React.Component {
                   {...this.props.onChangeModifiers !== null && {
                     onSelectElement: this.handleSelectElement,
                     onCancelSelection: this.handleCancelSelection,
-                    onChangeTag: tag => this.handleChangeTag(template.id, tag),
                     selectedElement: this.state.highlightedElement,
                   }}
                 >
@@ -93,7 +88,6 @@ class Palette extends React.Component {
 }
 
 Palette.propTypes = {
-  onChangeTag: PropTypes.func,
   onChangeModifiers: PropTypes.func,
   modifiers: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   fields: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
@@ -102,7 +96,6 @@ Palette.propTypes = {
 }
 
 Palette.defaultProps = {
-  onChangeTag: null,
   onChangeModifiers: null,
   placeholders: {},
 }

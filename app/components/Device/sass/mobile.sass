@@ -4,12 +4,21 @@
   height: 480px
   transition: all .5s
 
-  &--small
-
   &__Content
     transform: scale3d($deviceScaleRatio, $deviceScaleRatio, $deviceScaleRatio)
     transform-origin: 50% 0
 
+    .jampp__Ad__Selection
+      transform: scale3d(1 / $deviceScaleRatio, 1 / $deviceScaleRatio, 1 / $deviceScaleRatio)
+      transform-origin: 50% 0
+
     .screen
       background: url('/img/app-context.jpg') !important
       background-size: cover !important
+
+  &--landscape &__Content
+    transform: scale3d($landscapeDeviceScaleRatio, $landscapeDeviceScaleRatio, $landscapeDeviceScaleRatio)
+    transform-origin: 0 80%
+
+    .jampp__Ad__Selection
+      transform: scale3d(1 / $landscapeDeviceScaleRatio, 1 / $landscapeDeviceScaleRatio, 1 / $landscapeDeviceScaleRatio)

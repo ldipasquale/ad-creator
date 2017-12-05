@@ -3,7 +3,12 @@ import PropTypes from 'prop-types'
 
 import './styles.sass'
 
-const Input = ({ label, width }) => (
+const Input = ({
+  label,
+  width,
+  value,
+  onChange,
+}) => (
   <div className="jampp__Input">
     <div className="jampp__Input__Label">
       {label}
@@ -11,7 +16,9 @@ const Input = ({ label, width }) => (
 
     <input
       className="jampp__Input__Control"
-      {...width !== 0 && {
+      value={value}
+      onChange={e => onChange(e.value)}
+      {...width !== -1 && {
         style: {
           width: `${width}px`,
         },
@@ -23,10 +30,14 @@ const Input = ({ label, width }) => (
 Input.propTypes = {
   label: PropTypes.string.isRequired,
   width: PropTypes.number,
+  value: PropTypes.string,
+  onChange: PropTypes.func,
 }
 
 Input.defaultProps = {
-  width: 0,
+  width: -1,
+  value: null,
+  onChange: null,
 }
 
 export default Input
