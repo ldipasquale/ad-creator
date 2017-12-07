@@ -111,7 +111,7 @@ class Editor extends React.Component {
           <Tabs>
             <TabsItem title="Work Mode">
               <Palette
-                templates={this.state.templates.map(template => ({...template}))}
+                templates={this.state.templates.map(template => ({ ...template }))}
                 fields={this.state.fields}
                 modifiers={this.state.modifiers}
                 placeholders={{
