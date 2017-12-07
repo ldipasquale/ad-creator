@@ -90,7 +90,7 @@ function get() {
       },
       {
         id: 'rating',
-        type: 'container',
+        type: elements.RATING,
       },
     ],
   })

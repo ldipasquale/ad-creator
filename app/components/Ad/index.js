@@ -2,10 +2,14 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
 
+import elements from 'constants/elements'
+
 import { replacePlaceholders } from 'util/tags'
 import { scopeCss } from 'util/dom'
 
 import './styles.sass'
+
+const selectableElements = [elements.TEXT, elements.CONTAINER, elements.CONTAINED_TEXT]
 
 class Ad extends React.Component {
   constructor(props) {
@@ -64,7 +68,11 @@ class Ad extends React.Component {
         : false
       : !!hasCurrentSelection
 
-    if (didUpdateSelection) {
+    const isSelectableElement = newHighlightedElement
+      ? selectableElements.includes(newHighlightedElement.type)
+      : false
+
+    if (didUpdateSelection && isSelectableElement) {
       let selectedElement = this.adElement.querySelector(`[data-field=${newHighlightedElement.id}`)
 
       let extraMargin = 10
@@ -106,7 +114,7 @@ class Ad extends React.Component {
       }
     }
 
-    if (didNotFoundSelection || !hasCurrentSelection) {
+    if (didNotFoundSelection || !hasCurrentSelection || !isSelectableElement) {
       return this.setState({
         highlightedElement: null,
       })
