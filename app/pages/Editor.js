@@ -87,7 +87,7 @@ class Editor extends React.Component {
   handleSubmitPalette() {
     const palette = {
       name: this.state.name,
-      modifiers: this.state.modifiers,
+      fields: this.state.fields,
       templates: this.state.templates.map(template => ({
         width: template.width,
         height: template.height,
