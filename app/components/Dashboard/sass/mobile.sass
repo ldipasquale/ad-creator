@@ -6,7 +6,6 @@ $margin: $spacingMedium
   position: absolute
   width: 100%
   min-height: 100%
-  padding: $spacingXHuge
 
   &__Wrapper
     content: ''
@@ -20,9 +19,14 @@ $margin: $spacingMedium
     bottom: $margin
 
   &__Container
-    position: relative
+    position: absolute
+    top: $spacingXHuge
+    left: $spacingXHuge
+    right: $spacingXHuge
+    bottom: $spacingXHuge * 2 + $spacingXLarge * 2.5
     z-index: 1
     text-align: center
+    overflow: scroll
 
   &__Footer
     text-align: left
@@ -33,3 +37,14 @@ $margin: $spacingMedium
     bottom: 0
     padding: $spacingXLarge
     border-radius: 0 0 $borderRadius $borderRadius
+
+  &__Loader
+    text-align: center
+    position: relative
+    height: 100%
+    display: flex
+    justify-content: center
+    align-items: center
+
+    > div
+      display: inline-block

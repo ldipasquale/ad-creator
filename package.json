@@ -63,6 +63,7 @@
     "react-dom": "^16.0.0",
     "react-input-range": "^1.2.2",
     "react-slick": "^0.15.4",
+    "react-spinners": "^0.2.5",
     "react-style-proptype": "^3.1.0",
     "slick-carousel": "^1.8.1"
   }

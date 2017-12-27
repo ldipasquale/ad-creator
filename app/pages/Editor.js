@@ -1,6 +1,7 @@
 import React from 'react'
 
 import Dashboard from 'components/Dashboard'
+import DashboardLoader from 'components/Dashboard/Loader'
 import Button from 'components/Button'
 import Input from 'components/Input'
 import { Tabs, TabsItem } from 'components/Tabs'
@@ -18,6 +19,7 @@ class Editor extends React.Component {
 
     this.state = {
       isFetching: true,
+      isSaving: false,
       name: 'OLX',
       modifiers: {},
       templates: [],
@@ -64,6 +66,7 @@ class Editor extends React.Component {
           <Button
             theme="success"
             onClick={this.handleSubmitPalette}
+            isLoading={this.state.isSaving}
           >
             Save Palette
           </Button>
@@ -88,19 +91,25 @@ class Editor extends React.Component {
   }
 
   handleSubmitPalette() {
+    this.setState({ isSaving: true })
+
     return PaletteService.save({
       name: this.state.name,
       modifiers: this.state.modifiers,
       fields: this.state.fields,
       templates: this.state.templates,
-    }).then(() => window.close())
+    }).then(() => {
+      this.setState({ isSaving: false })
+
+      window.close()
+    })
   }
 
   render() {
     return (
       <Dashboard footerContent={this.getEditorFooter()}>
         {this.state.isFetching ? (
-          <span>...</span>
+          <DashboardLoader />
         ) : (
           <Tabs>
             <TabsItem title="Work Mode">
