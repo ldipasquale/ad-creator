@@ -45,9 +45,9 @@ class AdFieldHandlerPaneledButton extends React.Component {
 
   handleButtonClick() {
     if (this.state.isPanelOpened) {
-      document.removeEventListener('click', this.handleOutsideClick, false);
+      document.removeEventListener('click', this.handleOutsideClick, false)
     } else {
-      document.addEventListener('click', this.handleOutsideClick, false);
+      document.addEventListener('click', this.handleOutsideClick, false)
     }
 
     this.setState({

@@ -1,5 +1,3 @@
-import palettesMock from './mocks/palettes'
-
 import { CreativesAPI } from './api'
 
 function get(id) {
@@ -7,7 +5,7 @@ function get(id) {
     params: {
       include: 'templates,theme_fields',
     },
-  }).then(response => {
+  }).then((response) => {
     const rawPalettes = response.data.data
 
     const palettes = {
@@ -41,11 +39,11 @@ function save(rawPalette) {
       .map(field => ({
         ...field,
         palette_modifiers: Object.entries(rawPalette.modifiers[field.field])
-          .filter(([modifierId, modifierValue]) => modifierValue !== undefined)
+          .filter(([, modifierValue]) => modifierValue !== undefined)
           .map(([modifierId, modifierValue]) => ({
             modifier: modifierId,
             value: modifierValue,
-          }))
+          })),
       })),
   }
 

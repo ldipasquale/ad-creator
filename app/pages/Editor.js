@@ -26,15 +26,14 @@ class Editor extends React.Component {
 
     this.handleChangeModifiers = this.handleChangeModifiers.bind(this)
     this.handleSubmitPalette = this.handleSubmitPalette.bind(this)
-    this.handleDiscardPalette = this.handleDiscardPalette.bind(this)
     this.handleChangeName = this.handleChangeName.bind(this)
   }
 
   componentDidMount() {
-    const [slash, urlType, urlParam] = window.location.pathname.split('/')
+    const [, urlType, urlParam] = window.location.pathname.split('/')
 
     if (urlType === 'palette') {
-      PaletteService.get(parseInt(urlParam), 10).then(palette => this.setState({
+      PaletteService.get(parseInt(urlParam, 10)).then(palette => this.setState({
         isFetching: false,
         modifiers: palette.modifiers,
         originalTemplates: palette.templates,
@@ -57,7 +56,7 @@ class Editor extends React.Component {
         <ButtonList style={{ float: 'right', position: 'relative', top: '5px' }}>
           <Button
             theme="danger"
-            onClick={this.handleDiscardPalette}
+            onClick={() => window.close()}
           >
             Discard Palette
           </Button>
@@ -95,10 +94,6 @@ class Editor extends React.Component {
       fields: this.state.fields,
       templates: this.state.templates,
     }).then(() => window.close())
-  }
-
-  handleDiscardPalette() {
-    window.close()
   }
 
   render() {
