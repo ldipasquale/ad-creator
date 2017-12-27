@@ -31,13 +31,17 @@ class Editor extends React.Component {
   }
 
   componentDidMount() {
-    PaletteService.get(3).then(palette => this.setState({
-      isFetching: false,
-      modifiers: palette.modifiers,
-      originalTemplates: palette.templates,
-      templates: palette.templates,
-      fields: palette.fields,
-    }))
+    const [slash, urlType, urlParam] = window.location.pathname.split('/')
+
+    if (urlType === 'palette') {
+      PaletteService.get(parseInt(urlParam), 10).then(palette => this.setState({
+        isFetching: false,
+        modifiers: palette.modifiers,
+        originalTemplates: palette.templates,
+        templates: palette.templates,
+        fields: palette.fields,
+      }))
+    }
   }
 
   getEditorFooter() {
@@ -85,22 +89,16 @@ class Editor extends React.Component {
   }
 
   handleSubmitPalette() {
-    const palette = {
+    return PaletteService.save({
       name: this.state.name,
       modifiers: this.state.modifiers,
       fields: this.state.fields,
-      templates: this.state.templates.map(template => ({
-        width: template.width,
-        height: template.height,
-        tag: template.tag,
-      })),
-    }
-
-    return PaletteService.save(palette)
+      templates: this.state.templates,
+    }).then(() => window.close())
   }
 
   handleDiscardPalette() {
-    console.log('exit')
+    window.close()
   }
 
   render() {

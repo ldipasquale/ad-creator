@@ -21,7 +21,7 @@ function post(url, body) {
   })
 }
 
-export default {
+export const CreativesAPI = {
   get,
   post,
 }

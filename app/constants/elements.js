@@ -1,7 +1,6 @@
 export default {
-  TEXT: 'text',
-  CONTAINER: 'container',
-  CONTAINED_TEXT: 'containedText',
-  IMAGE: 'image',
-  RATING: 'rating',
+  TEXT: 'TEXT',
+  CONTAINER: 'CONTAINER',
+  CONTAINED_TEXT: 'CONTAINED_TEXT',
+  IMAGE: 'IMAGE',
 }

@@ -12,10 +12,7 @@ function get(id) {
 
     const palettes = {
       ...rawPalettes,
-      fields: rawPalettes.theme_fields.map(field => ({
-        ...field,
-        type: 'text',
-      })),
+      fields: rawPalettes.theme_fields,
       modifiers: rawPalettes.theme_fields
         .filter(field => field.palette_modifiers !== undefined)
         .reduce((modifiersAccumulator, field) => ({
@@ -33,17 +30,23 @@ function get(id) {
 
 function save(rawPalette) {
   const palette = {
+    theme_id: 10,
     name: rawPalette.name,
-    templates: rawPalette.templates,
-    theme_fields: rawPalette.fields.map(field => ({
-      ...field,
-      palette_modifiers: rawPalette.modifiers !== undefined && rawPalette.modifiers[field.field] !== undefined
-        ? Object.entries(rawPalette.modifiers[field.field]).map(([modifierId, modifierValue]) => ({
-          modifier: modifierId,
-          value: modifierValue,
-        }))
-        : [],
-    }))
+    templates: rawPalette.templates.map(template => ({
+      tag: template.tag,
+      creative_size_id: template.creative_size.id,
+    })),
+    theme_fields: rawPalette.fields
+      .filter(field => Object.keys(rawPalette.modifiers[field.field]).length > 0)
+      .map(field => ({
+        ...field,
+        palette_modifiers: Object.entries(rawPalette.modifiers[field.field])
+          .filter(([modifierId, modifierValue]) => modifierValue !== undefined)
+          .map(([modifierId, modifierValue]) => ({
+            modifier: modifierId,
+            value: modifierValue,
+          }))
+      })),
   }
 
   return CreativesAPI.post('/palettes/', palette)
