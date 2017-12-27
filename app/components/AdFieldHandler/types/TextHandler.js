@@ -14,9 +14,9 @@ const TextHandler = ({ onChangeModifiers, modifiers }) => (
     <FontStyleHandler
       onChange={onChangeModifiers}
       value={{
-        [modifiersValues.IS_FONT_BOLD]: modifiers[modifiersValues.IS_FONT_BOLD],
-        [modifiersValues.IS_FONT_ITALIC]: modifiers[modifiersValues.IS_FONT_ITALIC],
-        [modifiersValues.IS_FONT_UNDERLINE]: modifiers[modifiersValues.IS_FONT_UNDERLINE],
+        [modifiersValues.IS_FONT_BOLD]: !!modifiers[modifiersValues.IS_FONT_BOLD],
+        [modifiersValues.IS_FONT_ITALIC]: !!modifiers[modifiersValues.IS_FONT_ITALIC],
+        [modifiersValues.IS_FONT_UNDERLINE]: !!modifiers[modifiersValues.IS_FONT_UNDERLINE],
       }}
     />
 

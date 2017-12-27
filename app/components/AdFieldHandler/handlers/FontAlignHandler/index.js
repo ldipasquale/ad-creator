@@ -34,8 +34,12 @@ FontAlignHandler.propTypes = {
     fontAlignValues.LEFT,
     fontAlignValues.CENTER,
     fontAlignValues.RIGHT,
-  ]).isRequired,
+  ]),
   onChange: PropTypes.func.isRequired,
+}
+
+FontAlignHandler.defaultProps = {
+  value: fontAlignValues.LEFT,
 }
 
 export default FontAlignHandler

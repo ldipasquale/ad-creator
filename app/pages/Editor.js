@@ -31,7 +31,7 @@ class Editor extends React.Component {
   }
 
   componentDidMount() {
-    PaletteService.get().then(palette => this.setState({
+    PaletteService.get(3).then(palette => this.setState({
       isFetching: false,
       modifiers: palette.modifiers,
       originalTemplates: palette.templates,
@@ -87,6 +87,7 @@ class Editor extends React.Component {
   handleSubmitPalette() {
     const palette = {
       name: this.state.name,
+      modifiers: this.state.modifiers,
       fields: this.state.fields,
       templates: this.state.templates.map(template => ({
         width: template.width,

@@ -18,16 +18,8 @@ class Palette extends React.Component {
       highlightedElement: null,
     }
 
-    this.handleChangeModifiers = this.handleChangeModifiers.bind(this)
     this.handleSelectElement = this.handleSelectElement.bind(this)
     this.handleCancelSelection = this.handleCancelSelection.bind(this)
-  }
-
-  handleChangeModifiers(elementId, modifiers) {
-    this.props.onChangeModifiers({
-      ...this.props.modifiers,
-      [elementId]: modifiers,
-    })
   }
 
   handleSelectElement(element) {
@@ -45,14 +37,14 @@ class Palette extends React.Component {
   render() {
     return (
       <div>
-        {this.state.highlightedElement !== null && this.props.modifiers[this.state.highlightedElement.id] && (
+        {this.state.highlightedElement !== null && this.props.modifiers[this.state.highlightedElement.field] && (
           <AdFieldHandler
             onChange={modifiers => this.props.onChangeModifiers({
               ...this.props.modifiers,
-              [this.state.highlightedElement.id]: modifiers,
+              [this.state.highlightedElement.field]: modifiers,
             })}
             type={this.state.highlightedElement.type}
-            modifiers={this.props.modifiers[this.state.highlightedElement.id]}
+            modifiers={this.props.modifiers[this.state.highlightedElement.field]}
             style={getHandlerPosition(this.state.highlightedElement)}
           />
         )}
@@ -66,8 +58,8 @@ class Palette extends React.Component {
               >
                 <Ad
                   id={template.id}
-                  width={template.width}
-                  height={template.height}
+                  width={template.creative_size.width}
+                  height={template.creative_size.height}
                   fields={this.props.fields}
                   placeholders={this.props.placeholders}
                   {...this.props.onChangeModifiers !== null && {

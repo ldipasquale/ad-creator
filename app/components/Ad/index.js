@@ -64,7 +64,7 @@ class Ad extends React.Component {
 
     const didUpdateSelection = hasPreviousSelection
       ? hasCurrentSelection
-        ? this.state.highlightedElement.id !== newHighlightedElement.id
+        ? this.state.highlightedElement.field !== newHighlightedElement.field
         : false
       : !!hasCurrentSelection
 
@@ -73,7 +73,7 @@ class Ad extends React.Component {
       : false
 
     if (didUpdateSelection && isSelectableElement) {
-      let selectedElement = this.adElement.querySelector(`[data-field=${newHighlightedElement.id}`)
+      let selectedElement = this.adElement.querySelector(`[data-field=${newHighlightedElement.field}`)
 
       let extraMargin = 10
       let extraBorderRadius = 5
@@ -81,11 +81,11 @@ class Ad extends React.Component {
       if (!selectedElement) {
         didNotFoundSelection = true
       } else {
-        if (newHighlightedElement.id === 'container') {
+        if (newHighlightedElement.field === 'container') {
           [selectedElement] = selectedElement.childNodes
         }
 
-        if (newHighlightedElement.id.toLowerCase().includes('container')) {
+        if (newHighlightedElement.field.toLowerCase().includes('container')) {
           extraMargin = 0
           extraBorderRadius = -1
         }
@@ -97,9 +97,9 @@ class Ad extends React.Component {
 
         return this.setState({
           highlightedElement: {
-            id: newHighlightedElement.id,
+            field: newHighlightedElement.field,
             type: newHighlightedElement.type,
-            blockOutside: newHighlightedElement.id !== 'container',
+            blockOutside: newHighlightedElement.field !== 'container',
             style: {
               width: Math.floor(selectedElementProperties.width) + extraMargin,
               height: Math.ceil(selectedElementProperties.height) + extraMargin,
@@ -128,15 +128,15 @@ class Ad extends React.Component {
 
     if (this.props.onSelectElement !== null && this.props.onCancelSelection !== null) {
       let selectedElement = event.target
-      let selectedField = this.props.fields.find(field => field.id === selectedElement.dataset.field)
+      let selectedField = this.props.fields.find(field => field.field === selectedElement.dataset.field)
 
       while (selectedElement.parentElement && !selectedField) {
         selectedElement = selectedElement.parentElement
         // eslint-disable-next-line no-loop-func
-        selectedField = this.props.fields.find(field => field.id === selectedElement.dataset.field)
+        selectedField = this.props.fields.find(field => field.field === selectedElement.dataset.field)
       }
 
-      if (selectedField === null || (this.props.selectedElement && this.props.selectedElement.id === selectedField.id)) {
+      if (selectedField === null || (this.props.selectedElement && this.props.selectedElement.field === selectedField.field)) {
         return this.props.onCancelSelection()
       }
 
@@ -205,7 +205,7 @@ Ad.propTypes = {
   onSelectElement: PropTypes.func,
   onCancelSelection: PropTypes.func,
   selectedElement: PropTypes.shape({
-    id: PropTypes.string,
+    field: PropTypes.string,
     type: PropTypes.string,
   }),
   children: PropTypes.string.isRequired,
